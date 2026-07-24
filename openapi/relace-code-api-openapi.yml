@@ -1,0 +1,667 @@
+openapi: 3.0.1
+info:
+  title: Relace Code API
+  description: API for accessing Relace code generation models.
+  version: 1.0.0
+  license:
+    name: MIT
+servers:
+- url: https://compact.endpoint.relace.run
+  description: Server for agent trace compaction endpoints
+- url: https://instantapply.endpoint.relace.run
+  description: Server for code application endpoints
+- url: https://ranker.endpoint.relace.run
+  description: Server for code ranking endpoints
+- url: https://embeddings.endpoint.relace.run
+  description: Server for code embedding endpoints
+- url: https://api.relace.run
+  description: Server for general infrastructure
+security:
+- bearerAuth: []
+tags:
+- name: Code
+paths:
+  /v1/code/compact:
+    post:
+      description: Compress an agent trace to only the important details.
+      servers:
+      - url: https://compact.endpoint.relace.run
+      requestBody:
+        description: Agent trace to compact
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CompactRequest'
+            example:
+              messages:
+              - role: user
+                content: Find where the rate limiter is configured and raise the ceiling to 200 rps.
+              - role: assistant
+                content: ''
+                tool_calls:
+                - id: call_abc123
+                  type: function
+                  function:
+                    name: grep
+                    arguments: '{"pattern": "rate_limit"}'
+              - role: tool
+                tool_call_id: call_abc123
+                content: 'config/limits.py:14: RATE_LIMIT_RPS = 100'
+              - role: assistant
+                content: Found it — the ceiling is set in config/limits.py line 14. Raising it to 200.
+              target_tokens: 96000
+              agent_model: gpt-5.5
+      responses:
+        '200':
+          description: Compressed agent trace
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CompactResponse'
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error400'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error401'
+        '404':
+          description: API key not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error404'
+        '429':
+          description: Rate limit exceeded
+          headers:
+            X-RateLimit-Limit:
+              schema:
+                type: string
+              description: Rate limit ceiling for the API key
+            X-RateLimit-Remaining:
+              schema:
+                type: string
+              description: Number of requests left for the time window
+            X-RateLimit-Reset:
+              schema:
+                type: string
+              description: Time at which the rate limit resets
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error429'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error500'
+      tags:
+      - Code
+  /v1/code/apply:
+    post:
+      description: Merge code snippets from an LLM into your existing codebase.
+      servers:
+      - url: https://instantapply.endpoint.relace.run
+      requestBody:
+        description: Initial code and edits to apply
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/InstantApplyRequest'
+            example:
+              initial_code: "function calculateTotal(items) {\n  let total = 0;\n  \n  for (const item of items) {\n    total += item.price * item.quantity;\n  }\n  \n  return total;\n}"
+              edit_snippet: "// ... keep existing code\n\nfunction applyDiscount(total, discountRules) {\n  let discountedTotal = total;\n  \n  if (discountRules.percentOff) {\n    discountedTotal -= (total * discountRules.percentOff / 100);\n  }\n  \n  if (discountRules.fixedAmount && discountRules.fixedAmount < discountedTotal) {\n    discountedTotal -= discountRules.fixedAmount;\n  }\n  \n  return Math.max(0, discountedTotal);\n}"
+              stream: false
+      responses:
+        '200':
+          description: Code successfully applied
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InstantApplyResponse'
+            text/event-stream:
+              schema:
+                type: string
+                description: Stream of results from the Instant Apply model (compatible with OpenAI streaming format)
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error400'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error401'
+        '404':
+          description: API key not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error404'
+        '429':
+          description: Rate limit exceeded
+          headers:
+            X-RateLimit-Limit:
+              schema:
+                type: string
+              description: Rate limit ceiling for the API key
+            X-RateLimit-Remaining:
+              schema:
+                type: string
+              description: Number of requests left for the time window
+            X-RateLimit-Reset:
+              schema:
+                type: string
+              description: Time at which the rate limit resets
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error429'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error500'
+      tags:
+      - Code
+  /v1/code/rank:
+    post:
+      deprecated: true
+      description: List files in your codebase in order of relevance to a user's query.
+      servers:
+      - url: https://ranker.endpoint.relace.run
+      requestBody:
+        description: Query, codebase context, and token limit
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CodeRerankerRequest'
+            example:
+              query: Optimize the search function for better performance with large arrays
+              codebase:
+              - filename: src/search.ts
+                content: "function findItem(array: Item[], targetId: string): Item | undefined {\n  for (let i = 0; i < array.length; i++) {\n    const item = array[i];\n    if (item.id === targetId) {\n      return item;\n}\n}\n  return undefined;\n}"
+              - filename: src/types.ts
+                content: "interface Item {\n  id: string;\n  value: string;\n  metadata?: Record<string, unknown>;\n}"
+              - filename: src/render.ts
+                content: 'function renderItems(items: Item[]): void {\n  const container = document.getElementById(''items-container'');\n  if (!container) return;\n  \n  container.innerHTML = '''';\n  \n  for (const item of items) {\n    const element = document.createElement(''div'');\n    element.textContent = item.value;\n    element.dataset.id = item.id;\n    container.appendChild(element);\n}\n}'
+              - filename: src/styles.css
+                content: '.container {\n  max-width: 1200px;\n  margin: 0 auto;\n  padding: 20px;\n}\n\n.header {\n  background: #f5f5f5;\n  padding: 1rem;\n}'
+              - filename: src/constants.ts
+                content: export const APP_NAME = 'MyApp';\nexport const VERSION = '1.0.0';\nexport const MAX_ITEMS = 1000;
+              token_limit: 100000
+      responses:
+        '200':
+          description: Codebase reranked successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/v1CodeRerankerResponse'
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error400'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error401'
+        '404':
+          description: API key not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error404'
+        '429':
+          description: Rate limit exceeded
+          headers:
+            X-RateLimit-Limit:
+              schema:
+                type: string
+              description: Rate limit ceiling for the API key
+            X-RateLimit-Remaining:
+              schema:
+                type: string
+              description: Number of requests left for the time window
+            X-RateLimit-Reset:
+              schema:
+                type: string
+              description: Time at which the rate limit resets
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error429'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error500'
+      tags:
+      - Code
+  /v2/code/rank:
+    post:
+      description: Assess the relevance of each file in your codebase to a user's query.
+      servers:
+      - url: https://ranker.endpoint.relace.run
+      requestBody:
+        description: Query and codebase context for relevance scoring
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CodeRerankerRequest'
+            example:
+              query: Optimize the search function for better performance with large arrays
+              codebase:
+              - filename: src/search.ts
+                content: 'function findItem(array: Item[], targetId: string): Item | undefined {\n  for (let i = 0; i < array.length; i++) {\n    const item = array[i];\n    if (item.id === targetId) {\n      return item;\n}\n}\n  return undefined;\n}'
+              token_limit: 100000
+      responses:
+        '200':
+          description: Codebase reranked successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/v2CodeRerankerResponse'
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error400'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error401'
+        '404':
+          description: API key not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error404'
+        '429':
+          description: Rate limit exceeded
+          headers:
+            X-RateLimit-Limit:
+              schema:
+                type: string
+              description: Rate limit ceiling for the API key
+            X-RateLimit-Remaining:
+              schema:
+                type: string
+              description: Number of requests left for the time window
+            X-RateLimit-Reset:
+              schema:
+                type: string
+              description: Time at which the rate limit resets
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error429'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error500'
+      tags:
+      - Code
+  /v1/code/embed:
+    post:
+      description: Embed code snippets into a vector database for semantic search.
+      servers:
+      - url: https://embeddings.endpoint.relace.run
+      requestBody:
+        description: Codebase context for embedding
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/v1CodeEmbedderRequest'
+            example:
+              model: relace-embed-v1
+              input:
+              - input 1
+              - input 2
+      responses:
+        '200':
+          description: Codebase embedded successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/v1CodeEmbedderResponse'
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error400'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error401'
+        '404':
+          description: API key not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error404'
+        '429':
+          description: Rate limit exceeded
+          headers:
+            X-RateLimit-Limit:
+              schema:
+                type: string
+              description: Rate limit ceiling for the API key
+            X-RateLimit-Remaining:
+              schema:
+                type: string
+              description: Number of requests left for the time window
+            X-RateLimit-Reset:
+              schema:
+                type: string
+              description: Time at which the rate limit resets
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error429'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error500'
+      tags:
+      - Code
+components:
+  schemas:
+    Error401:
+      type: object
+      properties:
+        error:
+          type: string
+          description: Error message
+          example: Authorized header required
+    v1CodeEmbedderResponse:
+      type: object
+      properties:
+        results:
+          type: array
+          description: Array of embeddings of the input strings
+          items:
+            type: object
+            properties:
+              index:
+                type: integer
+                description: Index of the input string in the request
+              embedding:
+                type: array
+                description: Embedding vector of the input string
+            example:
+            - index: 0
+              embedding:
+              - 0.123
+              - 0.456
+              - 0.789
+            - index: 1
+              embedding:
+              - 0.234
+              - 0.567
+              - 0.89
+        usage:
+          type: object
+          properties:
+            total_tokens:
+              type: integer
+              description: Total number of tokens used
+              example: 8
+          description: Token usage information for the request
+    CodeFile:
+      type: object
+      required:
+      - filename
+      - content
+      properties:
+        filename:
+          type: string
+          description: The name of the file including its path
+        content:
+          type: string
+          description: The content of the file
+    Error429:
+      type: object
+      properties:
+        error:
+          type: string
+          description: Error message
+          example: Rate limit exceeded
+    v2CodeRerankerResponse:
+      type: object
+      properties:
+        results:
+          type: array
+          description: Array of files ranked by relevance to the query, with their scores
+          items:
+            type: object
+            properties:
+              filename:
+                type: string
+                description: The name of the file including its path
+              score:
+                type: number
+                description: The relevance score for this file (between 0 and 1)
+                format: float
+            required:
+            - filename
+            - score
+          example:
+          - filename: src/search.ts
+            score: 0.953125
+        usage:
+          type: object
+          properties:
+            total_tokens:
+              type: integer
+              description: Total number of tokens used
+              example: 96
+          description: Token usage information for the request
+    Error400:
+      type: object
+      properties:
+        error:
+          type: string
+          description: Error message
+          example: Invalid JSON in request body
+    v1CodeRerankerResponse:
+      type: array
+      description: Array of files ranked by relevance to the query
+      example:
+      - src/search.ts
+      - src/styles.css
+      - src/render.ts
+      - src/constants.ts
+      - src/types.ts
+    v1CodeEmbedderRequest:
+      type: object
+      properties:
+        model:
+          type: string
+          description: The model to use for embedding
+        input:
+          type: array
+          description: Array of strings to embed
+          items:
+            type: string
+        output_dtype:
+          type: string
+          description: Data type of the output embedding vectors. The `binary` quantization results in more compact embeddings with only a small loss in retrieval performance. See [HuggingFace blog post](https://huggingface.co/blog/embedding-quantization#binary-quantization) for details.
+          enum:
+          - float
+          - binary
+          default: float
+    CompactRequest:
+      type: object
+      required:
+      - messages
+      properties:
+        messages:
+          type: array
+          description: The agent trace to compact, in OpenAI Chat Completions, OpenAI Responses, or Anthropic Messages format. The format is detected automatically, and the compressed trace is returned in the same format.
+          items:
+            type: object
+            description: A message in the same format as the rest of the trace
+        target_tokens:
+          type: integer
+          description: Approximate token budget for the retained context, in your agent model's tokens. Defaults to 96k tokens. Counts are computed with a heuristic lookup table to reduce API latency; your provider's count may differ slightly.
+        agent_model:
+          type: string
+          description: The model that generated the trace, as its API model id (e.g. `claude-fable-5`, `gpt-5.5`, `grok-4.5`). Relace uses this to apply model-specific compaction improvements and count tokens more accurately.
+    CodeRerankerRequest:
+      type: object
+      required:
+      - query
+      - codebase
+      - token_limit
+      properties:
+        query:
+          type: string
+          description: The natural language query describing the problem to solve
+        codebase:
+          type: array
+          description: An array of files with their content, providing context for the query
+          items:
+            $ref: '#/components/schemas/CodeFile'
+        token_limit:
+          type: integer
+          description: Maximum token limit for the response
+          default: 100000
+        relace_metadata:
+          type: object
+          description: Optional metadata for logging and tracking purposes. Removed before forwarding to origin server.
+          additionalProperties: true
+    InstantApplyRequest:
+      type: object
+      required:
+      - initial_code
+      - edit_snippet
+      properties:
+        model:
+          type: string
+          description: Choice of apply model to use
+          enum:
+          - relace-apply-3
+          default: relace-apply-3
+        initial_code:
+          type: string
+          description: The original code that needs to be modified
+        edit_snippet:
+          type: string
+          description: The code changes to be applied to the initial code
+        instruction:
+          type: string
+          description: Optional single line instruction for to disambiguate the edit snippet. *e.g.* `Remove the captcha from the login page`
+        stream:
+          type: boolean
+          description: Whether to stream the response back
+          default: false
+        relace_metadata:
+          type: object
+          description: Optional metadata for logging and tracking purposes.
+          additionalProperties: true
+    Error500:
+      type: object
+      properties:
+        error:
+          type: string
+          description: Error message
+          example: Error fetching from origin server
+    InstantApplyResponse:
+      type: object
+      properties:
+        mergedCode:
+          type: string
+          description: The merged code with the changes applied
+        usage:
+          type: object
+          properties:
+            prompt_tokens:
+              type: integer
+              description: Number of tokens in the prompt
+            completion_tokens:
+              type: integer
+              description: Number of tokens in the completion
+            total_tokens:
+              type: integer
+              description: Total number of tokens used
+          description: Token usage information for the request
+      example:
+        mergedCode: "function calculateTotal(items) {\n  let total = 0;\n  \n  for (const item of items) {\n    total += item.price * item.quantity;\n  }\n  \n  return total;\n}\n\nfunction applyDiscount(total, discountRules) {\n  let discountedTotal = total;\n  \n  if (discountRules.percentOff) {\n    discountedTotal -= (total * discountRules.percentOff / 100);\n  }\n  \n  if (discountRules.fixedAmount && discountRules.fixedAmount < discountedTotal) {\n    discountedTotal -= discountRules.fixedAmount;\n  }\n  \n  return Math.max(0, discountedTotal);\n}"
+        usage:
+          prompt_tokens: 245
+          completion_tokens: 187
+          total_tokens: 432
+    CompactResponse:
+      type: object
+      properties:
+        messages:
+          type: array
+          description: The compressed agent trace, in the same format as the input.
+          items:
+            type: object
+            description: A message in the same format as the input
+        usage:
+          type: object
+          properties:
+            prompt_tokens:
+              type: integer
+              description: Number of tokens in the input conversation
+            completion_tokens:
+              type: integer
+              description: Size of the retained view in the server's tokenizer
+            total_tokens:
+              type: integer
+              description: Total number of tokens used
+          description: Token usage information for the request, counted in the Relace Compact tokenizer.
+      example:
+        messages:
+        - role: user
+          content: Find where the rate limiter is configured and raise the ceiling to 200 rps.
+        - role: assistant
+          content: Found it — the ceiling is set in config/limits.py line 14. Raising it to 200.
+        usage:
+          prompt_tokens: 135407
+          completion_tokens: 17323
+          total_tokens: 152730
+    Error404:
+      type: object
+      properties:
+        error:
+          type: string
+          description: Error message
+          example: 'Bad Request: Route not found'
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      description: Relace API key Authorization header using the Bearer scheme.

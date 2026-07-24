@@ -1,0 +1,548 @@
+openapi: 3.0.1
+info:
+  title: Relace Code Repo API
+  description: API for accessing Relace code generation models.
+  version: 1.0.0
+  license:
+    name: MIT
+servers:
+- url: https://compact.endpoint.relace.run
+  description: Server for agent trace compaction endpoints
+- url: https://instantapply.endpoint.relace.run
+  description: Server for code application endpoints
+- url: https://ranker.endpoint.relace.run
+  description: Server for code ranking endpoints
+- url: https://embeddings.endpoint.relace.run
+  description: Server for code embedding endpoints
+- url: https://api.relace.run
+  description: Server for general infrastructure
+security:
+- bearerAuth: []
+tags:
+- name: Repo
+paths:
+  /v1/repo:
+    post:
+      description: Create a new repository
+      servers:
+      - url: https://api.relace.run
+      requestBody:
+        description: Repository creation request
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateRepoRequest'
+      responses:
+        '201':
+          description: Repository created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreateRepoResponse'
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error400'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error401'
+      tags:
+      - Repo
+    get:
+      description: List all repositories
+      servers:
+      - url: https://api.relace.run
+      parameters:
+      - name: order_by
+        in: query
+        description: Field to order results by.
+        schema:
+          type: string
+          enum:
+          - created_at
+          - updated_at
+          default: created_at
+      - name: order_descending
+        in: query
+        description: Whether to order results in descending order.
+        schema:
+          type: boolean
+          default: false
+      - name: filter_metadata
+        in: query
+        description: URL-encoded JSON map of metadata key/value pairs to filter by.
+        schema:
+          type: string
+      - name: page_start
+        in: query
+        description: Index of the first item to return (0-based)
+        schema:
+          type: integer
+          default: 0
+      - name: page_size
+        in: query
+        description: Number of items to return per page
+        schema:
+          type: integer
+          default: 100
+      responses:
+        '200':
+          description: List of repositories
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListReposResponse'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error401'
+      tags:
+      - Repo
+  /v1/repo/{repo_id}:
+    delete:
+      description: Delete a repository
+      servers:
+      - url: https://api.relace.run
+      parameters:
+      - name: repo_id
+        in: path
+        required: true
+        description: Repository ID
+        schema:
+          type: string
+      responses:
+        '204':
+          description: Repository deleted successfully
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error401'
+        '404':
+          description: Repository not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error404'
+      tags:
+      - Repo
+  /v1/repo/{repo_id}/update:
+    post:
+      description: Update repository content
+      servers:
+      - url: https://api.relace.run
+      parameters:
+      - name: repo_id
+        in: path
+        required: true
+        description: Repository ID
+        schema:
+          type: string
+      requestBody:
+        description: Repository update request
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateRepoRequest'
+      responses:
+        '200':
+          description: Repository updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UpdateRepoResponse'
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error400'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error401'
+        '404':
+          description: Repository not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error404'
+      tags:
+      - Repo
+  /v1/repo/{repo_id}/retrieve:
+    post:
+      description: Retrieve relevant files from repository using semantic search
+      servers:
+      - url: https://api.relace.run
+      parameters:
+      - name: repo_id
+        in: path
+        required: true
+        description: Repository ID
+        schema:
+          type: string
+      requestBody:
+        description: Semantic search request
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RetrieveRequest'
+      responses:
+        '200':
+          description: Search results
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RetrieveResponse'
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error400'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error401'
+        '404':
+          description: Repository or index not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error404'
+      tags:
+      - Repo
+  /v1/repo/{repo_id}/search:
+    post:
+      description: Search for specific text patterns in repository files
+      servers:
+      - url: https://api.relace.run
+      parameters:
+      - name: repo_id
+        in: path
+        required: true
+        description: Repository ID
+        schema:
+          type: string
+      requestBody:
+        description: Text search request
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SearchRequest'
+      responses:
+        '200':
+          description: Search results with line matches
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SearchResponse'
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error400'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error401'
+        '404':
+          description: Repository not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error404'
+      tags:
+      - Repo
+components:
+  schemas:
+    Error401:
+      type: object
+      properties:
+        error:
+          type: string
+          description: Error message
+          example: Authorized header required
+    FileSource:
+      type: object
+      required:
+      - type
+      - files
+      properties:
+        type:
+          type: string
+          enum:
+          - files
+        files:
+          type: array
+          items:
+            type: object
+            required:
+            - filename
+            - content
+            properties:
+              filename:
+                type: string
+              content:
+                type: string
+    Error400:
+      type: object
+      properties:
+        error:
+          type: string
+          description: Error message
+          example: Invalid JSON in request body
+    GitSource:
+      type: object
+      required:
+      - type
+      - url
+      properties:
+        type:
+          type: string
+          enum:
+          - git
+        url:
+          type: string
+        branch:
+          type: string
+        commit:
+          type: string
+        depth:
+          type: integer
+    CreateRepoResponse:
+      type: object
+      required:
+      - repo_id
+      properties:
+        repo_id:
+          type: string
+    RetrieveRequest:
+      type: object
+      required:
+      - query
+      properties:
+        query:
+          type: string
+        branch:
+          type: string
+        hash:
+          type: string
+        score_threshold:
+          type: number
+          format: float
+        token_limit:
+          type: integer
+        include_content:
+          type: boolean
+    SearchResponse:
+      type: object
+      required:
+      - results
+      properties:
+        results:
+          type: array
+          items:
+            type: object
+            required:
+            - filename
+            - line_number
+            - line_content
+            - match_start
+            - match_end
+            properties:
+              filename:
+                type: string
+              line_number:
+                type: integer
+              line_content:
+                type: string
+              match_start:
+                type: integer
+              match_end:
+                type: integer
+    SearchRequest:
+      type: object
+      required:
+      - query
+      properties:
+        query:
+          type: string
+    CreateRepoRequest:
+      type: object
+      properties:
+        name:
+          type: string
+        source:
+          oneOf:
+          - $ref: '#/components/schemas/FileSource'
+          - $ref: '#/components/schemas/GitSource'
+    UpdateRepoResponse:
+      type: object
+      required:
+      - commit_id
+      properties:
+        commit_id:
+          type: string
+    FilesDiffSource:
+      type: object
+      required:
+      - type
+      - mode
+      - operations
+      properties:
+        type:
+          type: string
+          enum:
+          - files
+        mode:
+          type: string
+          enum:
+          - diff
+        operations:
+          type: array
+          items:
+            oneOf:
+            - type: object
+              required:
+              - operation
+              - filename
+              properties:
+                operation:
+                  type: string
+                  enum:
+                  - delete
+                filename:
+                  type: string
+            - type: object
+              required:
+              - operation
+              - filename
+              - content
+              properties:
+                operation:
+                  type: string
+                  enum:
+                  - write
+                filename:
+                  type: string
+                content:
+                  type: string
+    UpdateRepoRequest:
+      type: object
+      required:
+      - source
+      properties:
+        source:
+          oneOf:
+          - $ref: '#/components/schemas/GitSource'
+          - $ref: '#/components/schemas/FilesOverwriteSource'
+          - $ref: '#/components/schemas/FilesDiffSource'
+    FilesOverwriteSource:
+      type: object
+      required:
+      - type
+      - mode
+      - files
+      properties:
+        type:
+          type: string
+          enum:
+          - files
+        mode:
+          type: string
+          enum:
+          - overwrite
+        files:
+          type: array
+          items:
+            type: object
+            required:
+            - filename
+            - content
+            properties:
+              filename:
+                type: string
+              content:
+                type: string
+    Error404:
+      type: object
+      properties:
+        error:
+          type: string
+          description: Error message
+          example: 'Bad Request: Route not found'
+    ListReposResponse:
+      type: object
+      required:
+      - items
+      properties:
+        items:
+          type: array
+          items:
+            type: object
+            required:
+            - repo_id
+            - created_at
+            - metadata
+            properties:
+              repo_id:
+                type: string
+              created_at:
+                type: string
+                format: date-time
+              updated_at:
+                type: string
+                format: date-time
+              metadata:
+                type: object
+                additionalProperties: true
+        next_page:
+          type: integer
+          description: Index of the first item on the next page (omitted if there are no more items)
+    RetrieveResponse:
+      type: object
+      required:
+      - results
+      properties:
+        results:
+          type: array
+          items:
+            type: object
+            required:
+            - filename
+            - score
+            properties:
+              filename:
+                type: string
+              score:
+                type: number
+                format: float
+        hash:
+          type: string
+        pending_embeddings:
+          type: integer
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      description: Relace API key Authorization header using the Bearer scheme.
