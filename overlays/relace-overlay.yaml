@@ -1,0 +1,26 @@
+overlay: 1.0.0
+info:
+  title: API Evangelist enhancements for Relace API
+  version: 1.0.0
+extends: openapi/relace-openapi-original.json
+actions:
+  - target: $.info
+    update:
+      x-apievangelist-provider: relace
+      x-apievangelist-products:
+        - Instant Apply (relace-apply-3)
+        - Code Reranker (relace-rank)
+        - Code Embeddings
+        - Compact (relace-compact)
+        - Relace Repos
+      x-apievangelist-auth: bearer (rlc- API key)
+      x-apievangelist-error-catalog: errors/relace-error-codes.yml
+  - target: $.paths['/v1/code/apply'].post
+    update:
+      x-apievangelist-tags: [instant-apply, code-merge]
+  - target: $.paths['/v2/code/rank'].post
+    update:
+      x-apievangelist-tags: [code-reranker, retrieval]
+  - target: $.paths['/v1/repo'].post
+    update:
+      x-apievangelist-tags: [repos, source-control]

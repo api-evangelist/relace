@@ -1,0 +1,75 @@
+generated: '2026-07-21'
+method: searched
+source: https://docs.relace.ai/api-reference/errors
+format: simple-json
+envelope:
+  shape: '{ "error": "<message>" }'
+  field: error
+  note: >-
+    Relace returns a flat JSON object with a single string "error" field on
+    failures (not RFC 9457 problem+json). HTTP status carries the machine class.
+errors:
+  - code: invalid_parameter
+    status: 400
+    message: The parameter must be a valid value.
+    remediation: Verify parameter values are correct.
+  - code: validation_error
+    status: 400
+    message: We found an error with one or more fields in the request.
+    remediation: Review error details for specific field issues.
+  - code: missing_api_key
+    status: 401
+    message: Missing API key in the authorization header.
+    remediation: 'Add header: Authorization: Bearer YOUR_API_KEY.'
+  - code: invalid_api_key
+    status: 401
+    message: API key is invalid.
+    remediation: Verify key correctness or regenerate in the dashboard.
+  - code: insufficient_permissions
+    status: 403
+    message: API key lacks required permissions.
+    remediation: Ensure the key has the necessary operation permissions.
+  - code: not_found
+    status: 404
+    message: The requested resource does not exist.
+    remediation: Correct the request URL or verify the resource ID.
+  - code: method_not_allowed
+    status: 405
+    message: Method is not allowed for the requested path.
+    remediation: Use a valid HTTP method for the endpoint.
+  - code: conflict
+    status: 409
+    message: Request conflicts with the current state of the resource.
+    remediation: Align the request with the current resource state.
+  - code: payload_too_large
+    status: 413
+    message: Request body exceeds size limits.
+    remediation: 'Reduce payload (max file upload: 50MB).'
+  - code: invalid_template
+    status: 422
+    message: Invalid repository template URL.
+    remediation: Verify the template points to a valid Git repository.
+  - code: invalid_file_format
+    status: 422
+    message: File format is not supported for processing.
+    remediation: Use a supported file format.
+  - code: missing_required_field
+    status: 422
+    message: The request body is missing one or more required fields.
+    remediation: Include all required fields.
+  - code: resource_locked
+    status: 423
+    message: The resource is temporarily locked by another operation.
+    remediation: Retry after automatic unlock.
+  - code: rate_limit_exceeded
+    status: 429
+    message: Too many requests. Please limit requests per minute.
+    remediation: Reduce request frequency; check reset timing.
+  - code: application_error
+    status: 500
+    message: An unexpected error occurred.
+    remediation: Retry later; check the status page.
+  - code: internal_server_error
+    status: 500
+    message: An unexpected error occurred.
+    remediation: Retry later; check the status page.

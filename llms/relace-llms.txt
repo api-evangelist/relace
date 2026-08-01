@@ -1,0 +1,48 @@
+# Relace
+
+## Docs
+
+- [Rank Code](https://docs.relace.ai/api-reference/code-reranker/rank-v2.md): Assess the relevance of each file in your codebase to a user's query.
+- [Compact Trace](https://docs.relace.ai/api-reference/compact/compact.md): Compress an agent trace to only the important details.
+- [Embed Code](https://docs.relace.ai/api-reference/embed-code/embed.md): Embed code snippets into a vector database for semantic search.
+- [Errors](https://docs.relace.ai/api-reference/errors.md): Troubleshoot problems with this comprehensive breakdown of all error codes.
+- [Apply Code](https://docs.relace.ai/api-reference/instant-apply/apply.md): Merge code snippets from an LLM into your existing codebase.
+- [Introduction](https://docs.relace.ai/api-reference/introduction.md): Learn about Relace API organization, general response codes, and authentication strategies.
+- [Create Repo Token](https://docs.relace.ai/api-reference/repo_tokens/create.md): Create a scoped API token for specific repositories
+- [Delete Repo Token](https://docs.relace.ai/api-reference/repo_tokens/delete.md): Revoke and delete a repo token
+- [Get Repo Token Details](https://docs.relace.ai/api-reference/repo_tokens/get.md): Retrieve details about a specific repo token
+- [Clone Repo](https://docs.relace.ai/api-reference/repos/clone.md): Download all files and content from a repository
+- [Create Repo](https://docs.relace.ai/api-reference/repos/create.md): Create a new repo from files or a GitHub repo.
+- [Delete Repo](https://docs.relace.ai/api-reference/repos/delete.md): Delete a repo and all its associated data
+- [Get Repo Details](https://docs.relace.ai/api-reference/repos/get.md): Retrieve details about a specific repository
+- [List Repos](https://docs.relace.ai/api-reference/repos/list.md): Get a paginated list of all repos you own.
+- [Retrieve](https://docs.relace.ai/api-reference/repos/retrieve.md): Two-stage codebase retrieval using semantic search
+- [Update Repo](https://docs.relace.ai/api-reference/repos/update.md): Update repo content with files or sync from Git.
+- [Upload File](https://docs.relace.ai/api-reference/repos/upload.md): Upload a file to the repository
+- [Agent Tool Definition](https://docs.relace.ai/docs/code-reranker/agent.md)
+- [Quickstart](https://docs.relace.ai/docs/code-reranker/quickstart.md): Retrieve only relevant files from your codebase for a user request
+- [Workflow Guide](https://docs.relace.ai/docs/code-reranker/workflow.md)
+- [Quickstart](https://docs.relace.ai/docs/compact/quickstart.md): Compact agent traces to only the important details at >50k tok/s
+- [Quickstart](https://docs.relace.ai/docs/data-analysis/quickstart.md): Run an analysis on structured data and create plots in Typescript/React.
+- [Quickstart](https://docs.relace.ai/docs/embeddings/quickstart.md): Create codebase vector embeddings for semantic search
+- [Overview](https://docs.relace.ai/docs/fast-agentic-search/agent.md): Learn how the harness that runs fast agentic search works.
+- [Integration](https://docs.relace.ai/docs/fast-agentic-search/integration.md): Integrate FAS results with your main coding agent.
+- [MCP Installation](https://docs.relace.ai/docs/fast-agentic-search/mcp-installation.md): Use the Relace MCP to integrate FAS into any coding agent.
+- [Run on Repos](https://docs.relace.ai/docs/fast-agentic-search/quickstart.md): Run FAS with a pre-built agent harness on any Relace Repo.
+- [Agent Tool Definition](https://docs.relace.ai/docs/instant-apply/agent.md)
+- [Quickstart](https://docs.relace.ai/docs/instant-apply/quickstart.md): Apply file edits from your coding agent at >10k tok/s
+- [Workflow Guide](https://docs.relace.ai/docs/instant-apply/workflow.md)
+- [Introduction](https://docs.relace.ai/docs/introduction.md): The Relace API serves our suite of models and infrastructure for code generation.
+- [Git Commands](https://docs.relace.ai/docs/repos/git-commands.md): Use standard git operations to efficiently push/pull from any file system
+- [GitHub Integration](https://docs.relace.ai/docs/repos/github-integration.md): Integrate Relace Repos with your GitHub account or app
+- [Semantic Search](https://docs.relace.ai/docs/repos/index-and-retrieve.md): Learn how to import a GitHub project into Relace Repos for semantic search
+- [Onboarding](https://docs.relace.ai/docs/repos/onboarding.md): Transition to Relace Repos as your coding agent's source control system
+- [Overview](https://docs.relace.ai/docs/repos/overview.md): Learn about how Relace Repos offers convenient source control for your AI application with built in state-of-the-art code retrieval.
+- [Relace Templates](https://docs.relace.ai/docs/repos/relace-templates.md): Create a template as a starting point for new Relace repos
+- [Repo Tokens](https://docs.relace.ai/docs/repos/repo-tokens.md): Manage and use tokens for accessing your Relace repos securely
+- [Sandboxes](https://docs.relace.ai/docs/repos/sandbox.md): Test and experiment with your Relace repos in an isolated sandbox environment
+- [Sync to Relace Repos](https://docs.relace.ai/docs/repos/sync.md): Keep an external source of truth in sync with Relace Repos
+
+## OpenAPI Specs
+
+- [openapi](https://docs.relace.ai/api-reference/openapi.json)

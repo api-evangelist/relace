@@ -1,0 +1,40 @@
+generated: '2026-07-21'
+method: derived
+source: openapi/relace-openapi-original.json
+entities:
+  - name: Repo
+    id_field: repo_id
+    description: A Relace Repo — source control for AI agents with built-in two-stage retrieval.
+    operations:
+      - POST /v1/repo (create)
+      - GET /v1/repo (list)
+      - DELETE /v1/repo/{repo_id} (delete)
+      - POST /v1/repo/{repo_id}/update (update)
+      - POST /v1/repo/{repo_id}/retrieve (two-stage retrieval)
+      - POST /v1/repo/{repo_id}/search (semantic search)
+  - name: RepoToken
+    description: A scoped API token granting access to specific repositories.
+    operations:
+      - Create Repo Token
+      - Get Repo Token Details
+      - Delete Repo Token
+  - name: CodeModelJob
+    description: >-
+      Stateless model invocations (compact, apply, rank, embed) that operate on
+      code payloads rather than persisted resources.
+    operations:
+      - POST /v1/code/compact
+      - POST /v1/code/apply
+      - POST /v1/code/rank
+      - POST /v2/code/rank
+      - POST /v1/code/embed
+relationships:
+  - from: RepoToken
+    to: Repo
+    kind: belongs_to
+    via: repository scope
+    note: A repo token is scoped to one or more repositories.
+  - from: Repo
+    to: CodeModelJob
+    kind: has_many
+    via: retrieve/search operations run against a repo

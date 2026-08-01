@@ -1,0 +1,24 @@
+generated: '2026-07-21'
+method: generated
+source: openapi/relace-openapi-original.json
+skills:
+  - file: relace-instant-apply.md
+    name: Apply LLM code edits with Relace Instant Apply
+    api: openapi/relace-openapi-original.json
+    operations:
+      - 'POST /v1/code/apply'
+  - file: relace-code-retrieval.md
+    name: Retrieve relevant files from a codebase with Relace
+    api: openapi/relace-openapi-original.json
+    operations:
+      - 'POST /v2/code/rank'
+      - 'POST /v1/repo/{repo_id}/retrieve'
+      - 'POST /v1/repo/{repo_id}/search'
+  - file: relace-repos-lifecycle.md
+    name: Manage a Relace Repo lifecycle
+    api: openapi/relace-openapi-original.json
+    operations:
+      - 'POST /v1/repo'
+      - 'GET /v1/repo'
+      - 'POST /v1/repo/{repo_id}/update'
+      - 'DELETE /v1/repo/{repo_id}'

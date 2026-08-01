@@ -1,0 +1,18 @@
+generated: '2026-07-21'
+method: searched
+source: openapi/relace-openapi-original.json
+docs: https://docs.relace.ai/api-reference/introduction
+key_format: rlc-<32-char>
+obtain: https://app.relace.ai/settings/api-keys
+scoped_tokens: >-
+  Repo Tokens are scoped API keys created per repository for narrower access.
+summary:
+  types:
+  - http
+schemes:
+- name: bearerAuth
+  type: http
+  scheme: bearer
+  description: Relace API key Authorization header using the Bearer scheme.
+  sources:
+  - openapi/relace-openapi-original.json

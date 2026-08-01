@@ -1,0 +1,30 @@
+generated: '2026-07-21'
+method: searched
+source: live probes of /.well-known/* on Relace hosts
+notes: >-
+  No /.well-known/ discovery documents are published on any Relace host
+  (relace.ai, api.relace.run, docs.relace.ai, app.relace.ai). All probes
+  returned 404. This is a valid, recorded empty result — nothing to save.
+hosts:
+  - host: https://relace.ai
+    documents:
+      - {path: /.well-known/security.txt, status: 404}
+      - {path: /.well-known/openid-configuration, status: 404}
+      - {path: /.well-known/oauth-authorization-server, status: 404}
+      - {path: /.well-known/api-catalog, status: 404}
+      - {path: /.well-known/ai-plugin.json, status: 404}
+  - host: https://api.relace.run
+    documents:
+      - {path: /.well-known/security.txt, status: 404}
+      - {path: /.well-known/openid-configuration, status: 404}
+      - {path: /.well-known/oauth-authorization-server, status: 404}
+      - {path: /.well-known/api-catalog, status: 404}
+      - {path: /.well-known/ai-plugin.json, status: 404}
+  - host: https://docs.relace.ai
+    documents:
+      - {path: /.well-known/security.txt, status: 404}
+      - {path: /.well-known/api-catalog, status: 404}
+  - host: https://app.relace.ai
+    documents:
+      - {path: /.well-known/security.txt, status: 404}
+      - {path: /.well-known/openid-configuration, status: 404}

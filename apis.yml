@@ -1,27 +1,144 @@
 aid: relace
 name: Relace
-description: 'Relace is a company surfaced as a portfolio company of matrix-partners and added to the
-  API Evangelist network as a stub for enrichment. Sector: ai. This profile is a lead awaiting the enrichment
-  pipeline.'
+description: >-
+  Relace builds purpose-built AI models and infrastructure for coding agents.
+  Its hosted API exposes fast, specialized models — Instant Apply (relace-apply-3)
+  for merging LLM code edits at over 10k tok/s, a Code Reranker (relace-rank) and
+  code embeddings for semantic codebase retrieval, and Compact for compressing
+  agent traces — alongside Relace Repos, a "GitHub for AI agents" source-control
+  layer with built-in two-stage retrieval and Fast Agentic Search. Authentication
+  is a Bearer API key (rlc- prefix); official Python and TypeScript SDKs and an
+  MCP server are published, and enterprise SOC 2, on-premise, and VPC-isolated
+  deployments are offered. Backed by Matrix Partners and Y Combinator.
 url: https://raw.githubusercontent.com/api-evangelist/relace/refs/heads/main/apis.yml
+accessModel:
+  pricing: unknown
+  onboarding: self-serve
+  trial: false
+  try_now: false
+  public: false
+  label: Self-serve signup
+  confidence: medium
+  source:
+  - authentication
+  generated: '2026-07-22'
+  method: derived
+image: https://framerusercontent.com/images/D6XFBAXygf3ZHyjrXSmLmItnPI.png
 x-type: company
 x-source: vc-portfolio
 x-backed-by:
 - matrix-partners
-x-tier: stub
-x-tier-reason: portfolio-lead
+x-tier: profiled
+x-tier-reason: enriched-from-live-api
 specificationVersion: '0.20'
 created: '2026-07-17'
-modified: '2026-07-17'
+modified: '2026-07-21'
 tags:
 - Company
-- Ai
-apis: []
+- AI
+- Coding Agents
+- Code Generation
+- Developer Tools
+- Machine Learning
+- Code Search
+- LLM
+apis:
+- aid: relace:relace-code-api
+  name: Relace Code API
+  description: The Code API from Relace — 5 operation(s) for code.
+  humanURL: https://docs.relace.ai/docs/introduction
+  baseURL: https://api.relace.run
+  tags:
+  - Code
+  properties:
+  - type: OpenAPI
+    url: openapi/relace-code-api-openapi.yml
+  - type: Documentation
+    url: https://docs.relace.ai/docs/introduction
+  - type: APIReference
+    url: https://docs.relace.ai/api-reference/introduction
+- aid: relace:relace-repo-api
+  name: Relace Repo API
+  description: The Repo API from Relace — 5 operation(s) for repo.
+  humanURL: https://docs.relace.ai/docs/introduction
+  baseURL: https://api.relace.run
+  tags:
+  - Repo
+  properties:
+  - type: OpenAPI
+    url: openapi/relace-repo-api-openapi.yml
+  - type: Documentation
+    url: https://docs.relace.ai/docs/introduction
+  - type: APIReference
+    url: https://docs.relace.ai/api-reference/introduction
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com
 - FN: APIs.json
   email: info@apis.io
 common:
+- type: DeveloperPortal
+  url: https://docs.relace.ai
+- type: Documentation
+  url: https://docs.relace.ai/docs/introduction
+- type: APIReference
+  url: https://docs.relace.ai/api-reference/introduction
+- type: GettingStarted
+  url: https://docs.relace.ai/docs/instant-apply/quickstart
+- type: Quickstart
+  url: https://docs.relace.ai/docs/instant-apply/quickstart
+- type: SignUp
+  url: https://app.relace.ai/sign-up
+- type: Pricing
+  url: https://relace.ai/pricing
+- type: Blog
+  url: https://relace.ai/blog
+- type: TermsOfService
+  url: https://relace.ai/legal/terms-of-use
+- type: PrivacyPolicy
+  url: https://relace.ai/legal/privacy-policy
+- type: GitHubOrganization
+  url: https://github.com/squack-io
+- type: StatusPage
+  url: https://status.relace.ai/
+- type: Compliance
+  url: https://relace.ai/pricing
+- type: Authentication
+  url: authentication/relace-authentication.yml
+- type: OpenAPI
+  url: openapi/relace-openapi-original.json
+- type: MCPServer
+  url: mcp/relace-mcp.yml
+- type: Packages
+  url: packages/relace-packages.yml
+- type: SDKs
+  url: packages/relace-packages.yml
+- type: AgentSkill
+  url: skills/_index.yml
+- type: LLMsTxt
+  url: llms/relace-llms.txt
+- type: ErrorCatalog
+  url: errors/relace-error-codes.yml
+- type: Lifecycle
+  url: lifecycle/relace-lifecycle.yml
+- type: Conventions
+  url: conventions/relace-conventions.yml
+- type: Conformance
+  url: conformance/relace-conformance.yml
+- type: DataModel
+  url: data-model/relace-data-model.yml
+- type: Sandbox
+  url: sandbox/relace-sandbox.yml
+- type: Overlay
+  url: overlays/relace-overlay.yaml
+- type: AgenticAccess
+  url: agentic-access/relace-agentic-access.yml
+- type: DomainSecurity
+  url: security/relace-domain-security.yml
 - type: Website
   url: https://relace.ai
+x-enrichment:
+  date: '2026-07-21'
+  status: enriched
+  artifacts_added: 16
+  pass: local-v1

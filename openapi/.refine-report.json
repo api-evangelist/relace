@@ -1,0 +1,16 @@
+{
+  "provider": "relace",
+  "sources": [
+    "relace-code-api-openapi.yml",
+    "relace-repo-api-openapi.yml"
+  ],
+  "outputs": [
+    "relace-code-api-openapi.yml",
+    "relace-repo-api-openapi.yml"
+  ],
+  "archived": [],
+  "errors": [],
+  "warnings": [],
+  "notes": [],
+  "skipped": []
+}

@@ -1,0 +1,32 @@
+generated: '2026-07-21'
+method: searched
+source: https://relace.ai/pricing (SOC 2 claim) ; openapi/relace-openapi-original.json
+standards:
+  - id: soc2
+    conforms: true
+    evidence: >-
+      Relace states its systems are SOC 2 compliant (pricing/security FAQ);
+      enterprise on-premise and VPC-isolated deployments offered, data encrypted
+      in transit and at rest.
+  - id: oauth2
+    conforms: false
+    evidence: API uses bearer API-key auth, not OAuth 2.0.
+  - id: oidc
+    conforms: false
+  - id: rfc9457-problem-details
+    conforms: false
+    evidence: 'Errors are a flat { "error": string } object, not application/problem+json.'
+  - id: rfc9116-security-txt
+    conforms: false
+    evidence: No /.well-known/security.txt published.
+  - id: json-api
+    conforms: false
+compliance:
+  programs:
+    - name: SOC 2
+      status: compliant
+      source: https://relace.ai/pricing
+  deployment_options:
+    - on-premise
+    - vpc-isolated
+    - hosted

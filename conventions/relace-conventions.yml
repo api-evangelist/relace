@@ -1,0 +1,38 @@
+generated: '2026-07-21'
+method: searched
+source: https://docs.relace.ai/api-reference/introduction ; openapi/relace-openapi-original.json
+authentication:
+  style: bearer
+  header: 'Authorization: Bearer <token>'
+  key_format: rlc-<32-char>
+  obtain: https://app.relace.ai/settings/api-keys
+  scoped_tokens: >-
+    Repo Tokens are scoped API tokens created per repository
+    (POST /v1/repo-tokens) for narrower access.
+idempotency:
+  supported: false
+  note: No idempotency-key header or contract is documented.
+pagination:
+  style: unknown
+  note: >-
+    List Repos (GET /v1/repo) is documented as "a paginated list of all repos
+    you own"; specific cursor/offset parameters are not detailed in the spec.
+versioning:
+  style: uri-path
+  current: v2
+  cross_ref: lifecycle/relace-lifecycle.yml
+error_envelope:
+  shape: '{ "error": "<message>" }'
+  field: error
+  format: simple-json
+  cross_ref: errors/relace-error-codes.yml
+rate_limiting:
+  model: per-tier
+  free_tier: 3 requests/minute
+  high_volume: unlimited (higher tiers)
+  headers: unknown
+  docs: https://docs.relace.ai/docs/policies#rate-limits
+media_type: application/json
+hosts:
+  model_endpoints: https://<model>.endpoint.relace.run
+  infrastructure: https://api.relace.run

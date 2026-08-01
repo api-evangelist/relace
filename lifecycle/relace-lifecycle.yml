@@ -1,0 +1,19 @@
+generated: '2026-07-21'
+method: searched
+source: https://docs.relace.ai/api-reference/introduction ; https://status.relace.ai/
+versioning:
+  scheme: uri-path
+  current: v2
+  observed: [v1, v2]
+  note: >-
+    Endpoints are versioned in the URI path (/v1/..., /v2/...). Code Reranker
+    ships both /v1/code/rank and /v2/code/rank; v2 is the current reranker.
+deprecation:
+  policy_url: null
+  sunset_header: null
+  note: No published deprecation/sunset policy found as of this pass.
+status_page: https://status.relace.ai/
+sla:
+  url: null
+  uptime_target: null
+deprecated_operations: []

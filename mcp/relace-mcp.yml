@@ -1,0 +1,33 @@
+generated: '2026-07-21'
+method: searched
+status: published
+source: https://docs.relace.ai/docs/fast-agentic-search/mcp-installation
+server:
+  name: relace-mcp-server
+  transport: stdio
+  package: relace-mcp-server
+  registry: pypi
+  install: uvx relace-mcp-server
+  config:
+    command: uvx
+    args:
+      - relace-mcp-server
+    env:
+      RELACE_API_KEY: YOUR_API_KEY_HERE
+  auth:
+    type: api_key
+    env: RELACE_API_KEY
+    obtain: https://app.relace.ai/settings/api-keys
+  clients:
+    - Claude Code
+    - Cursor
+    - VS Code
+  prerequisites:
+    - uv package manager
+    - ripgrep (rg) for grep_search
+tools:
+  - name: relace_search
+    description: >-
+      Fast Agentic Search — sifts through the codebase and returns a formatted
+      list of relevant files with line ranges, using parallel view_file and grep
+      over the local filesystem.

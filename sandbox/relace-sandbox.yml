@@ -1,0 +1,23 @@
+generated: '2026-07-21'
+method: searched
+source: https://docs.relace.ai/docs/repos/sandbox ; https://app.relace.ai
+surfaces:
+  - kind: playground
+    name: Relace App / Playground
+    url: https://app.relace.ai
+    description: >-
+      Web console where you can start experimenting with the hosted API within
+      minutes and manage API keys (app.relace.ai/settings/api-keys).
+  - kind: sandbox
+    name: Relace Repo Sandboxes
+    url: https://docs.relace.ai/docs/repos/sandbox
+    description: >-
+      Isolated sandbox environment to test and experiment with Relace repos
+      without affecting the source of truth.
+test_credentials:
+  note: >-
+    Relace publishes no static test keys, test cards, or magic test identifiers.
+    Sandboxing is a live isolated-environment feature, not fixed fixture values.
+free_tier:
+  rate_limit: 3 requests/minute
+  note: Free testing access is rate-limited; see conventions/relace-conventions.yml.
