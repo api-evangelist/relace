@@ -106,7 +106,7 @@ common:
 - type: Authentication
   url: authentication/relace-authentication.yml
 - type: OpenAPI
-  url: openapi/relace-openapi-original.json
+  url: openapi/_original/relace-openapi-original.json
 - type: MCPServer
   url: mcp/relace-mcp.yml
 - type: Packages
