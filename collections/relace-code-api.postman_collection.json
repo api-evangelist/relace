@@ -1,0 +1,2111 @@
+{
+  "item": [
+    {
+      "id": "41e59695-051d-40fb-b6a6-a176187b7ab0",
+      "name": "Code",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "ea067cba-80e4-4ca0-bfae-80acc1175682",
+          "name": "Compress an agent trace to only the important details.",
+          "request": {
+            "name": "Compress an agent trace to only the important details.",
+            "description": {
+              "content": "Compress an agent trace to only the important details.",
+              "type": "text/plain"
+            },
+            "url": {
+              "protocol": "https",
+              "path": [
+                "v1",
+                "code",
+                "compact"
+              ],
+              "host": [
+                "compact",
+                "endpoint",
+                "relace",
+                "run"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"messages\": [\n    \"<object>\",\n    \"<object>\"\n  ],\n  \"target_tokens\": \"<integer>\",\n  \"agent_model\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "59cc67a3-98c5-4d0f-a08c-7c1321924810",
+              "name": "Compressed agent trace",
+              "originalRequest": {
+                "url": {
+                  "protocol": "https",
+                  "path": [
+                    "v1",
+                    "code",
+                    "compact"
+                  ],
+                  "host": [
+                    "compact",
+                    "endpoint",
+                    "relace",
+                    "run"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"messages\": [\n    {\n      \"role\": \"user\",\n      \"content\": \"Find where the rate limiter is configured and raise the ceiling to 200 rps.\"\n    },\n    {\n      \"role\": \"assistant\",\n      \"content\": \"\",\n      \"tool_calls\": [\n        {\n          \"id\": \"call_abc123\",\n          \"type\": \"function\",\n          \"function\": {\n            \"name\": \"grep\",\n            \"arguments\": \"{\\\"pattern\\\": \\\"rate_limit\\\"}\"\n          }\n        }\n      ]\n    },\n    {\n      \"role\": \"tool\",\n      \"tool_call_id\": \"call_abc123\",\n      \"content\": \"config/limits.py:14: RATE_LIMIT_RPS = 100\"\n    },\n    {\n      \"role\": \"assistant\",\n      \"content\": \"Found it — the ceiling is set in config/limits.py line 14. Raising it to 200.\"\n    }\n  ],\n  \"target_tokens\": 96000,\n  \"agent_model\": \"gpt-5.5\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"messages\": [\n    {\n      \"role\": \"user\",\n      \"content\": \"Find where the rate limiter is configured and raise the ceiling to 200 rps.\"\n    },\n    {\n      \"role\": \"assistant\",\n      \"content\": \"Found it — the ceiling is set in config/limits.py line 14. Raising it to 200.\"\n    }\n  ],\n  \"usage\": {\n    \"prompt_tokens\": 135407,\n    \"completion_tokens\": 17323,\n    \"total_tokens\": 152730\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "0c046590-963d-49ab-a1c0-ed005f96d1d4",
+              "name": "Bad request",
+              "originalRequest": {
+                "url": {
+                  "protocol": "https",
+                  "path": [
+                    "v1",
+                    "code",
+                    "compact"
+                  ],
+                  "host": [
+                    "compact",
+                    "endpoint",
+                    "relace",
+                    "run"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"messages\": [\n    {\n      \"role\": \"user\",\n      \"content\": \"Find where the rate limiter is configured and raise the ceiling to 200 rps.\"\n    },\n    {\n      \"role\": \"assistant\",\n      \"content\": \"\",\n      \"tool_calls\": [\n        {\n          \"id\": \"call_abc123\",\n          \"type\": \"function\",\n          \"function\": {\n            \"name\": \"grep\",\n            \"arguments\": \"{\\\"pattern\\\": \\\"rate_limit\\\"}\"\n          }\n        }\n      ]\n    },\n    {\n      \"role\": \"tool\",\n      \"tool_call_id\": \"call_abc123\",\n      \"content\": \"config/limits.py:14: RATE_LIMIT_RPS = 100\"\n    },\n    {\n      \"role\": \"assistant\",\n      \"content\": \"Found it — the ceiling is set in config/limits.py line 14. Raising it to 200.\"\n    }\n  ],\n  \"target_tokens\": 96000,\n  \"agent_model\": \"gpt-5.5\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"Invalid JSON in request body\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "74a5bc4f-93fb-4fed-a2ad-8ec1d0e03ab5",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "protocol": "https",
+                  "path": [
+                    "v1",
+                    "code",
+                    "compact"
+                  ],
+                  "host": [
+                    "compact",
+                    "endpoint",
+                    "relace",
+                    "run"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"messages\": [\n    {\n      \"role\": \"user\",\n      \"content\": \"Find where the rate limiter is configured and raise the ceiling to 200 rps.\"\n    },\n    {\n      \"role\": \"assistant\",\n      \"content\": \"\",\n      \"tool_calls\": [\n        {\n          \"id\": \"call_abc123\",\n          \"type\": \"function\",\n          \"function\": {\n            \"name\": \"grep\",\n            \"arguments\": \"{\\\"pattern\\\": \\\"rate_limit\\\"}\"\n          }\n        }\n      ]\n    },\n    {\n      \"role\": \"tool\",\n      \"tool_call_id\": \"call_abc123\",\n      \"content\": \"config/limits.py:14: RATE_LIMIT_RPS = 100\"\n    },\n    {\n      \"role\": \"assistant\",\n      \"content\": \"Found it — the ceiling is set in config/limits.py line 14. Raising it to 200.\"\n    }\n  ],\n  \"target_tokens\": 96000,\n  \"agent_model\": \"gpt-5.5\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"Authorized header required\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "312bde73-c7d4-489c-8839-cbd38ae3d788",
+              "name": "API key not found",
+              "originalRequest": {
+                "url": {
+                  "protocol": "https",
+                  "path": [
+                    "v1",
+                    "code",
+                    "compact"
+                  ],
+                  "host": [
+                    "compact",
+                    "endpoint",
+                    "relace",
+                    "run"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"messages\": [\n    {\n      \"role\": \"user\",\n      \"content\": \"Find where the rate limiter is configured and raise the ceiling to 200 rps.\"\n    },\n    {\n      \"role\": \"assistant\",\n      \"content\": \"\",\n      \"tool_calls\": [\n        {\n          \"id\": \"call_abc123\",\n          \"type\": \"function\",\n          \"function\": {\n            \"name\": \"grep\",\n            \"arguments\": \"{\\\"pattern\\\": \\\"rate_limit\\\"}\"\n          }\n        }\n      ]\n    },\n    {\n      \"role\": \"tool\",\n      \"tool_call_id\": \"call_abc123\",\n      \"content\": \"config/limits.py:14: RATE_LIMIT_RPS = 100\"\n    },\n    {\n      \"role\": \"assistant\",\n      \"content\": \"Found it — the ceiling is set in config/limits.py line 14. Raising it to 200.\"\n    }\n  ],\n  \"target_tokens\": 96000,\n  \"agent_model\": \"gpt-5.5\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"Bad Request: Route not found\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "2d9f13fe-b03b-48a7-9a69-aad0fc2baf5f",
+              "name": "Rate limit exceeded",
+              "originalRequest": {
+                "url": {
+                  "protocol": "https",
+                  "path": [
+                    "v1",
+                    "code",
+                    "compact"
+                  ],
+                  "host": [
+                    "compact",
+                    "endpoint",
+                    "relace",
+                    "run"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"messages\": [\n    {\n      \"role\": \"user\",\n      \"content\": \"Find where the rate limiter is configured and raise the ceiling to 200 rps.\"\n    },\n    {\n      \"role\": \"assistant\",\n      \"content\": \"\",\n      \"tool_calls\": [\n        {\n          \"id\": \"call_abc123\",\n          \"type\": \"function\",\n          \"function\": {\n            \"name\": \"grep\",\n            \"arguments\": \"{\\\"pattern\\\": \\\"rate_limit\\\"}\"\n          }\n        }\n      ]\n    },\n    {\n      \"role\": \"tool\",\n      \"tool_call_id\": \"call_abc123\",\n      \"content\": \"config/limits.py:14: RATE_LIMIT_RPS = 100\"\n    },\n    {\n      \"role\": \"assistant\",\n      \"content\": \"Found it — the ceiling is set in config/limits.py line 14. Raising it to 200.\"\n    }\n  ],\n  \"target_tokens\": 96000,\n  \"agent_model\": \"gpt-5.5\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "disabled": false,
+                  "description": "Rate limit ceiling for the API key",
+                  "key": "X-RateLimit-Limit",
+                  "value": "string"
+                },
+                {
+                  "disabled": false,
+                  "description": "Number of requests left for the time window",
+                  "key": "X-RateLimit-Remaining",
+                  "value": "string"
+                },
+                {
+                  "disabled": false,
+                  "description": "Time at which the rate limit resets",
+                  "key": "X-RateLimit-Reset",
+                  "value": "string"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"Rate limit exceeded\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "4a8f96f0-4a7e-44f0-83fd-7191c4d8c53a",
+              "name": "Internal server error",
+              "originalRequest": {
+                "url": {
+                  "protocol": "https",
+                  "path": [
+                    "v1",
+                    "code",
+                    "compact"
+                  ],
+                  "host": [
+                    "compact",
+                    "endpoint",
+                    "relace",
+                    "run"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"messages\": [\n    {\n      \"role\": \"user\",\n      \"content\": \"Find where the rate limiter is configured and raise the ceiling to 200 rps.\"\n    },\n    {\n      \"role\": \"assistant\",\n      \"content\": \"\",\n      \"tool_calls\": [\n        {\n          \"id\": \"call_abc123\",\n          \"type\": \"function\",\n          \"function\": {\n            \"name\": \"grep\",\n            \"arguments\": \"{\\\"pattern\\\": \\\"rate_limit\\\"}\"\n          }\n        }\n      ]\n    },\n    {\n      \"role\": \"tool\",\n      \"tool_call_id\": \"call_abc123\",\n      \"content\": \"config/limits.py:14: RATE_LIMIT_RPS = 100\"\n    },\n    {\n      \"role\": \"assistant\",\n      \"content\": \"Found it — the ceiling is set in config/limits.py line 14. Raising it to 200.\"\n    }\n  ],\n  \"target_tokens\": 96000,\n  \"agent_model\": \"gpt-5.5\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"Error fetching from origin server\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "3b162f35-f926-4fe6-af03-7e55ee12db42",
+          "name": "Merge code snippets from an LLM into your existing codebase.",
+          "request": {
+            "name": "Merge code snippets from an LLM into your existing codebase.",
+            "description": {
+              "content": "Merge code snippets from an LLM into your existing codebase.",
+              "type": "text/plain"
+            },
+            "url": {
+              "protocol": "https",
+              "path": [
+                "v1",
+                "code",
+                "apply"
+              ],
+              "host": [
+                "instantapply",
+                "endpoint",
+                "relace",
+                "run"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"initial_code\": \"<string>\",\n  \"edit_snippet\": \"<string>\",\n  \"model\": \"relace-apply-3\",\n  \"instruction\": \"<string>\",\n  \"stream\": false,\n  \"relace_metadata\": {\n    \"key_0\": 1171.9552636962837,\n    \"key_1\": 5036,\n    \"key_2\": false\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "97aba81f-c385-4b78-aa74-6ff630633d20",
+              "name": "Code successfully applied",
+              "originalRequest": {
+                "url": {
+                  "protocol": "https",
+                  "path": [
+                    "v1",
+                    "code",
+                    "apply"
+                  ],
+                  "host": [
+                    "instantapply",
+                    "endpoint",
+                    "relace",
+                    "run"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"initial_code\": \"function calculateTotal(items) {\\n  let total = 0;\\n  \\n  for (const item of items) {\\n    total += item.price * item.quantity;\\n  }\\n  \\n  return total;\\n}\",\n  \"edit_snippet\": \"// ... keep existing code\\n\\nfunction applyDiscount(total, discountRules) {\\n  let discountedTotal = total;\\n  \\n  if (discountRules.percentOff) {\\n    discountedTotal -= (total * discountRules.percentOff / 100);\\n  }\\n  \\n  if (discountRules.fixedAmount && discountRules.fixedAmount < discountedTotal) {\\n    discountedTotal -= discountRules.fixedAmount;\\n  }\\n  \\n  return Math.max(0, discountedTotal);\\n}\",\n  \"stream\": false\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"mergedCode\": \"function calculateTotal(items) {\\n  let total = 0;\\n  \\n  for (const item of items) {\\n    total += item.price * item.quantity;\\n  }\\n  \\n  return total;\\n}\\n\\nfunction applyDiscount(total, discountRules) {\\n  let discountedTotal = total;\\n  \\n  if (discountRules.percentOff) {\\n    discountedTotal -= (total * discountRules.percentOff / 100);\\n  }\\n  \\n  if (discountRules.fixedAmount && discountRules.fixedAmount < discountedTotal) {\\n    discountedTotal -= discountRules.fixedAmount;\\n  }\\n  \\n  return Math.max(0, discountedTotal);\\n}\",\n  \"usage\": {\n    \"prompt_tokens\": 245,\n    \"completion_tokens\": 187,\n    \"total_tokens\": 432\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "029602dc-f370-4133-b433-990755fdb274",
+              "name": "Bad request",
+              "originalRequest": {
+                "url": {
+                  "protocol": "https",
+                  "path": [
+                    "v1",
+                    "code",
+                    "apply"
+                  ],
+                  "host": [
+                    "instantapply",
+                    "endpoint",
+                    "relace",
+                    "run"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"initial_code\": \"function calculateTotal(items) {\\n  let total = 0;\\n  \\n  for (const item of items) {\\n    total += item.price * item.quantity;\\n  }\\n  \\n  return total;\\n}\",\n  \"edit_snippet\": \"// ... keep existing code\\n\\nfunction applyDiscount(total, discountRules) {\\n  let discountedTotal = total;\\n  \\n  if (discountRules.percentOff) {\\n    discountedTotal -= (total * discountRules.percentOff / 100);\\n  }\\n  \\n  if (discountRules.fixedAmount && discountRules.fixedAmount < discountedTotal) {\\n    discountedTotal -= discountRules.fixedAmount;\\n  }\\n  \\n  return Math.max(0, discountedTotal);\\n}\",\n  \"stream\": false\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"Invalid JSON in request body\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "e691731c-e86c-4137-83a1-5f3d4fc0d114",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "protocol": "https",
+                  "path": [
+                    "v1",
+                    "code",
+                    "apply"
+                  ],
+                  "host": [
+                    "instantapply",
+                    "endpoint",
+                    "relace",
+                    "run"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"initial_code\": \"function calculateTotal(items) {\\n  let total = 0;\\n  \\n  for (const item of items) {\\n    total += item.price * item.quantity;\\n  }\\n  \\n  return total;\\n}\",\n  \"edit_snippet\": \"// ... keep existing code\\n\\nfunction applyDiscount(total, discountRules) {\\n  let discountedTotal = total;\\n  \\n  if (discountRules.percentOff) {\\n    discountedTotal -= (total * discountRules.percentOff / 100);\\n  }\\n  \\n  if (discountRules.fixedAmount && discountRules.fixedAmount < discountedTotal) {\\n    discountedTotal -= discountRules.fixedAmount;\\n  }\\n  \\n  return Math.max(0, discountedTotal);\\n}\",\n  \"stream\": false\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"Authorized header required\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "655e15e1-563b-42b6-836e-c818afa81954",
+              "name": "API key not found",
+              "originalRequest": {
+                "url": {
+                  "protocol": "https",
+                  "path": [
+                    "v1",
+                    "code",
+                    "apply"
+                  ],
+                  "host": [
+                    "instantapply",
+                    "endpoint",
+                    "relace",
+                    "run"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"initial_code\": \"function calculateTotal(items) {\\n  let total = 0;\\n  \\n  for (const item of items) {\\n    total += item.price * item.quantity;\\n  }\\n  \\n  return total;\\n}\",\n  \"edit_snippet\": \"// ... keep existing code\\n\\nfunction applyDiscount(total, discountRules) {\\n  let discountedTotal = total;\\n  \\n  if (discountRules.percentOff) {\\n    discountedTotal -= (total * discountRules.percentOff / 100);\\n  }\\n  \\n  if (discountRules.fixedAmount && discountRules.fixedAmount < discountedTotal) {\\n    discountedTotal -= discountRules.fixedAmount;\\n  }\\n  \\n  return Math.max(0, discountedTotal);\\n}\",\n  \"stream\": false\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"Bad Request: Route not found\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "0ec247a3-b4c8-4ded-89cb-e6ef522e8f53",
+              "name": "Rate limit exceeded",
+              "originalRequest": {
+                "url": {
+                  "protocol": "https",
+                  "path": [
+                    "v1",
+                    "code",
+                    "apply"
+                  ],
+                  "host": [
+                    "instantapply",
+                    "endpoint",
+                    "relace",
+                    "run"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"initial_code\": \"function calculateTotal(items) {\\n  let total = 0;\\n  \\n  for (const item of items) {\\n    total += item.price * item.quantity;\\n  }\\n  \\n  return total;\\n}\",\n  \"edit_snippet\": \"// ... keep existing code\\n\\nfunction applyDiscount(total, discountRules) {\\n  let discountedTotal = total;\\n  \\n  if (discountRules.percentOff) {\\n    discountedTotal -= (total * discountRules.percentOff / 100);\\n  }\\n  \\n  if (discountRules.fixedAmount && discountRules.fixedAmount < discountedTotal) {\\n    discountedTotal -= discountRules.fixedAmount;\\n  }\\n  \\n  return Math.max(0, discountedTotal);\\n}\",\n  \"stream\": false\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "disabled": false,
+                  "description": "Rate limit ceiling for the API key",
+                  "key": "X-RateLimit-Limit",
+                  "value": "string"
+                },
+                {
+                  "disabled": false,
+                  "description": "Number of requests left for the time window",
+                  "key": "X-RateLimit-Remaining",
+                  "value": "string"
+                },
+                {
+                  "disabled": false,
+                  "description": "Time at which the rate limit resets",
+                  "key": "X-RateLimit-Reset",
+                  "value": "string"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"Rate limit exceeded\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ceca05a6-7774-452a-818a-504637d297c5",
+              "name": "Internal server error",
+              "originalRequest": {
+                "url": {
+                  "protocol": "https",
+                  "path": [
+                    "v1",
+                    "code",
+                    "apply"
+                  ],
+                  "host": [
+                    "instantapply",
+                    "endpoint",
+                    "relace",
+                    "run"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"initial_code\": \"function calculateTotal(items) {\\n  let total = 0;\\n  \\n  for (const item of items) {\\n    total += item.price * item.quantity;\\n  }\\n  \\n  return total;\\n}\",\n  \"edit_snippet\": \"// ... keep existing code\\n\\nfunction applyDiscount(total, discountRules) {\\n  let discountedTotal = total;\\n  \\n  if (discountRules.percentOff) {\\n    discountedTotal -= (total * discountRules.percentOff / 100);\\n  }\\n  \\n  if (discountRules.fixedAmount && discountRules.fixedAmount < discountedTotal) {\\n    discountedTotal -= discountRules.fixedAmount;\\n  }\\n  \\n  return Math.max(0, discountedTotal);\\n}\",\n  \"stream\": false\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"Error fetching from origin server\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "836ef445-2f77-4a42-afc0-ee9ffe482ddd",
+          "name": "List files in your codebase in order of relevance to a user's query.",
+          "request": {
+            "name": "List files in your codebase in order of relevance to a user's query.",
+            "description": {
+              "content": "List files in your codebase in order of relevance to a user's query.",
+              "type": "text/plain"
+            },
+            "url": {
+              "protocol": "https",
+              "path": [
+                "v1",
+                "code",
+                "rank"
+              ],
+              "host": [
+                "ranker",
+                "endpoint",
+                "relace",
+                "run"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"query\": \"<string>\",\n  \"codebase\": [\n    {\n      \"filename\": \"<string>\",\n      \"content\": \"<string>\"\n    },\n    {\n      \"filename\": \"<string>\",\n      \"content\": \"<string>\"\n    }\n  ],\n  \"token_limit\": 100000,\n  \"relace_metadata\": {\n    \"key_0\": \"string\"\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "0c3dad25-0811-435d-825a-cbe43a108185",
+              "name": "Codebase reranked successfully",
+              "originalRequest": {
+                "url": {
+                  "protocol": "https",
+                  "path": [
+                    "v1",
+                    "code",
+                    "rank"
+                  ],
+                  "host": [
+                    "ranker",
+                    "endpoint",
+                    "relace",
+                    "run"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"query\": \"Optimize the search function for better performance with large arrays\",\n  \"codebase\": [\n    {\n      \"filename\": \"src/search.ts\",\n      \"content\": \"function findItem(array: Item[], targetId: string): Item | undefined {\\n  for (let i = 0; i < array.length; i++) {\\n    const item = array[i];\\n    if (item.id === targetId) {\\n      return item;\\n}\\n}\\n  return undefined;\\n}\"\n    },\n    {\n      \"filename\": \"src/types.ts\",\n      \"content\": \"interface Item {\\n  id: string;\\n  value: string;\\n  metadata?: Record<string, unknown>;\\n}\"\n    },\n    {\n      \"filename\": \"src/render.ts\",\n      \"content\": \"function renderItems(items: Item[]): void {\\\\n  const container = document.getElementById('items-container');\\\\n  if (!container) return;\\\\n  \\\\n  container.innerHTML = '';\\\\n  \\\\n  for (const item of items) {\\\\n    const element = document.createElement('div');\\\\n    element.textContent = item.value;\\\\n    element.dataset.id = item.id;\\\\n    container.appendChild(element);\\\\n}\\\\n}\"\n    },\n    {\n      \"filename\": \"src/styles.css\",\n      \"content\": \".container {\\\\n  max-width: 1200px;\\\\n  margin: 0 auto;\\\\n  padding: 20px;\\\\n}\\\\n\\\\n.header {\\\\n  background: #f5f5f5;\\\\n  padding: 1rem;\\\\n}\"\n    },\n    {\n      \"filename\": \"src/constants.ts\",\n      \"content\": \"export const APP_NAME = 'MyApp';\\\\nexport const VERSION = '1.0.0';\\\\nexport const MAX_ITEMS = 1000;\"\n    }\n  ],\n  \"token_limit\": 100000\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  \"src/search.ts\",\n  \"src/styles.css\",\n  \"src/render.ts\",\n  \"src/constants.ts\",\n  \"src/types.ts\"\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "83c37f63-ba41-440a-856e-204ddf06f72c",
+              "name": "Bad request",
+              "originalRequest": {
+                "url": {
+                  "protocol": "https",
+                  "path": [
+                    "v1",
+                    "code",
+                    "rank"
+                  ],
+                  "host": [
+                    "ranker",
+                    "endpoint",
+                    "relace",
+                    "run"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"query\": \"Optimize the search function for better performance with large arrays\",\n  \"codebase\": [\n    {\n      \"filename\": \"src/search.ts\",\n      \"content\": \"function findItem(array: Item[], targetId: string): Item | undefined {\\n  for (let i = 0; i < array.length; i++) {\\n    const item = array[i];\\n    if (item.id === targetId) {\\n      return item;\\n}\\n}\\n  return undefined;\\n}\"\n    },\n    {\n      \"filename\": \"src/types.ts\",\n      \"content\": \"interface Item {\\n  id: string;\\n  value: string;\\n  metadata?: Record<string, unknown>;\\n}\"\n    },\n    {\n      \"filename\": \"src/render.ts\",\n      \"content\": \"function renderItems(items: Item[]): void {\\\\n  const container = document.getElementById('items-container');\\\\n  if (!container) return;\\\\n  \\\\n  container.innerHTML = '';\\\\n  \\\\n  for (const item of items) {\\\\n    const element = document.createElement('div');\\\\n    element.textContent = item.value;\\\\n    element.dataset.id = item.id;\\\\n    container.appendChild(element);\\\\n}\\\\n}\"\n    },\n    {\n      \"filename\": \"src/styles.css\",\n      \"content\": \".container {\\\\n  max-width: 1200px;\\\\n  margin: 0 auto;\\\\n  padding: 20px;\\\\n}\\\\n\\\\n.header {\\\\n  background: #f5f5f5;\\\\n  padding: 1rem;\\\\n}\"\n    },\n    {\n      \"filename\": \"src/constants.ts\",\n      \"content\": \"export const APP_NAME = 'MyApp';\\\\nexport const VERSION = '1.0.0';\\\\nexport const MAX_ITEMS = 1000;\"\n    }\n  ],\n  \"token_limit\": 100000\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"Invalid JSON in request body\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "09b1e98f-0c51-435d-be60-9e1281668679",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "protocol": "https",
+                  "path": [
+                    "v1",
+                    "code",
+                    "rank"
+                  ],
+                  "host": [
+                    "ranker",
+                    "endpoint",
+                    "relace",
+                    "run"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"query\": \"Optimize the search function for better performance with large arrays\",\n  \"codebase\": [\n    {\n      \"filename\": \"src/search.ts\",\n      \"content\": \"function findItem(array: Item[], targetId: string): Item | undefined {\\n  for (let i = 0; i < array.length; i++) {\\n    const item = array[i];\\n    if (item.id === targetId) {\\n      return item;\\n}\\n}\\n  return undefined;\\n}\"\n    },\n    {\n      \"filename\": \"src/types.ts\",\n      \"content\": \"interface Item {\\n  id: string;\\n  value: string;\\n  metadata?: Record<string, unknown>;\\n}\"\n    },\n    {\n      \"filename\": \"src/render.ts\",\n      \"content\": \"function renderItems(items: Item[]): void {\\\\n  const container = document.getElementById('items-container');\\\\n  if (!container) return;\\\\n  \\\\n  container.innerHTML = '';\\\\n  \\\\n  for (const item of items) {\\\\n    const element = document.createElement('div');\\\\n    element.textContent = item.value;\\\\n    element.dataset.id = item.id;\\\\n    container.appendChild(element);\\\\n}\\\\n}\"\n    },\n    {\n      \"filename\": \"src/styles.css\",\n      \"content\": \".container {\\\\n  max-width: 1200px;\\\\n  margin: 0 auto;\\\\n  padding: 20px;\\\\n}\\\\n\\\\n.header {\\\\n  background: #f5f5f5;\\\\n  padding: 1rem;\\\\n}\"\n    },\n    {\n      \"filename\": \"src/constants.ts\",\n      \"content\": \"export const APP_NAME = 'MyApp';\\\\nexport const VERSION = '1.0.0';\\\\nexport const MAX_ITEMS = 1000;\"\n    }\n  ],\n  \"token_limit\": 100000\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"Authorized header required\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "2cea9c9c-af5c-40b3-acb2-661e5f64024b",
+              "name": "API key not found",
+              "originalRequest": {
+                "url": {
+                  "protocol": "https",
+                  "path": [
+                    "v1",
+                    "code",
+                    "rank"
+                  ],
+                  "host": [
+                    "ranker",
+                    "endpoint",
+                    "relace",
+                    "run"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"query\": \"Optimize the search function for better performance with large arrays\",\n  \"codebase\": [\n    {\n      \"filename\": \"src/search.ts\",\n      \"content\": \"function findItem(array: Item[], targetId: string): Item | undefined {\\n  for (let i = 0; i < array.length; i++) {\\n    const item = array[i];\\n    if (item.id === targetId) {\\n      return item;\\n}\\n}\\n  return undefined;\\n}\"\n    },\n    {\n      \"filename\": \"src/types.ts\",\n      \"content\": \"interface Item {\\n  id: string;\\n  value: string;\\n  metadata?: Record<string, unknown>;\\n}\"\n    },\n    {\n      \"filename\": \"src/render.ts\",\n      \"content\": \"function renderItems(items: Item[]): void {\\\\n  const container = document.getElementById('items-container');\\\\n  if (!container) return;\\\\n  \\\\n  container.innerHTML = '';\\\\n  \\\\n  for (const item of items) {\\\\n    const element = document.createElement('div');\\\\n    element.textContent = item.value;\\\\n    element.dataset.id = item.id;\\\\n    container.appendChild(element);\\\\n}\\\\n}\"\n    },\n    {\n      \"filename\": \"src/styles.css\",\n      \"content\": \".container {\\\\n  max-width: 1200px;\\\\n  margin: 0 auto;\\\\n  padding: 20px;\\\\n}\\\\n\\\\n.header {\\\\n  background: #f5f5f5;\\\\n  padding: 1rem;\\\\n}\"\n    },\n    {\n      \"filename\": \"src/constants.ts\",\n      \"content\": \"export const APP_NAME = 'MyApp';\\\\nexport const VERSION = '1.0.0';\\\\nexport const MAX_ITEMS = 1000;\"\n    }\n  ],\n  \"token_limit\": 100000\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"Bad Request: Route not found\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b372c3ee-1e94-46d2-858b-a4b6ef79f858",
+              "name": "Rate limit exceeded",
+              "originalRequest": {
+                "url": {
+                  "protocol": "https",
+                  "path": [
+                    "v1",
+                    "code",
+                    "rank"
+                  ],
+                  "host": [
+                    "ranker",
+                    "endpoint",
+                    "relace",
+                    "run"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"query\": \"Optimize the search function for better performance with large arrays\",\n  \"codebase\": [\n    {\n      \"filename\": \"src/search.ts\",\n      \"content\": \"function findItem(array: Item[], targetId: string): Item | undefined {\\n  for (let i = 0; i < array.length; i++) {\\n    const item = array[i];\\n    if (item.id === targetId) {\\n      return item;\\n}\\n}\\n  return undefined;\\n}\"\n    },\n    {\n      \"filename\": \"src/types.ts\",\n      \"content\": \"interface Item {\\n  id: string;\\n  value: string;\\n  metadata?: Record<string, unknown>;\\n}\"\n    },\n    {\n      \"filename\": \"src/render.ts\",\n      \"content\": \"function renderItems(items: Item[]): void {\\\\n  const container = document.getElementById('items-container');\\\\n  if (!container) return;\\\\n  \\\\n  container.innerHTML = '';\\\\n  \\\\n  for (const item of items) {\\\\n    const element = document.createElement('div');\\\\n    element.textContent = item.value;\\\\n    element.dataset.id = item.id;\\\\n    container.appendChild(element);\\\\n}\\\\n}\"\n    },\n    {\n      \"filename\": \"src/styles.css\",\n      \"content\": \".container {\\\\n  max-width: 1200px;\\\\n  margin: 0 auto;\\\\n  padding: 20px;\\\\n}\\\\n\\\\n.header {\\\\n  background: #f5f5f5;\\\\n  padding: 1rem;\\\\n}\"\n    },\n    {\n      \"filename\": \"src/constants.ts\",\n      \"content\": \"export const APP_NAME = 'MyApp';\\\\nexport const VERSION = '1.0.0';\\\\nexport const MAX_ITEMS = 1000;\"\n    }\n  ],\n  \"token_limit\": 100000\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "disabled": false,
+                  "description": "Rate limit ceiling for the API key",
+                  "key": "X-RateLimit-Limit",
+                  "value": "string"
+                },
+                {
+                  "disabled": false,
+                  "description": "Number of requests left for the time window",
+                  "key": "X-RateLimit-Remaining",
+                  "value": "string"
+                },
+                {
+                  "disabled": false,
+                  "description": "Time at which the rate limit resets",
+                  "key": "X-RateLimit-Reset",
+                  "value": "string"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"Rate limit exceeded\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "7554c2c2-2e40-47a3-8e97-4d89d9bef5c9",
+              "name": "Internal server error",
+              "originalRequest": {
+                "url": {
+                  "protocol": "https",
+                  "path": [
+                    "v1",
+                    "code",
+                    "rank"
+                  ],
+                  "host": [
+                    "ranker",
+                    "endpoint",
+                    "relace",
+                    "run"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"query\": \"Optimize the search function for better performance with large arrays\",\n  \"codebase\": [\n    {\n      \"filename\": \"src/search.ts\",\n      \"content\": \"function findItem(array: Item[], targetId: string): Item | undefined {\\n  for (let i = 0; i < array.length; i++) {\\n    const item = array[i];\\n    if (item.id === targetId) {\\n      return item;\\n}\\n}\\n  return undefined;\\n}\"\n    },\n    {\n      \"filename\": \"src/types.ts\",\n      \"content\": \"interface Item {\\n  id: string;\\n  value: string;\\n  metadata?: Record<string, unknown>;\\n}\"\n    },\n    {\n      \"filename\": \"src/render.ts\",\n      \"content\": \"function renderItems(items: Item[]): void {\\\\n  const container = document.getElementById('items-container');\\\\n  if (!container) return;\\\\n  \\\\n  container.innerHTML = '';\\\\n  \\\\n  for (const item of items) {\\\\n    const element = document.createElement('div');\\\\n    element.textContent = item.value;\\\\n    element.dataset.id = item.id;\\\\n    container.appendChild(element);\\\\n}\\\\n}\"\n    },\n    {\n      \"filename\": \"src/styles.css\",\n      \"content\": \".container {\\\\n  max-width: 1200px;\\\\n  margin: 0 auto;\\\\n  padding: 20px;\\\\n}\\\\n\\\\n.header {\\\\n  background: #f5f5f5;\\\\n  padding: 1rem;\\\\n}\"\n    },\n    {\n      \"filename\": \"src/constants.ts\",\n      \"content\": \"export const APP_NAME = 'MyApp';\\\\nexport const VERSION = '1.0.0';\\\\nexport const MAX_ITEMS = 1000;\"\n    }\n  ],\n  \"token_limit\": 100000\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"Error fetching from origin server\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "b799837d-62ff-4731-97fb-09a54953b933",
+          "name": "Assess the relevance of each file in your codebase to a user's query.",
+          "request": {
+            "name": "Assess the relevance of each file in your codebase to a user's query.",
+            "description": {
+              "content": "Assess the relevance of each file in your codebase to a user's query.",
+              "type": "text/plain"
+            },
+            "url": {
+              "protocol": "https",
+              "path": [
+                "v2",
+                "code",
+                "rank"
+              ],
+              "host": [
+                "ranker",
+                "endpoint",
+                "relace",
+                "run"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"query\": \"<string>\",\n  \"codebase\": [\n    {\n      \"filename\": \"<string>\",\n      \"content\": \"<string>\"\n    },\n    {\n      \"filename\": \"<string>\",\n      \"content\": \"<string>\"\n    }\n  ],\n  \"token_limit\": 100000,\n  \"relace_metadata\": {\n    \"key_0\": 6201.804411443856,\n    \"key_1\": 5731.431983002368\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "9d475de5-0cf4-4be3-9efb-bd4b4524f97d",
+              "name": "Codebase reranked successfully",
+              "originalRequest": {
+                "url": {
+                  "protocol": "https",
+                  "path": [
+                    "v2",
+                    "code",
+                    "rank"
+                  ],
+                  "host": [
+                    "ranker",
+                    "endpoint",
+                    "relace",
+                    "run"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"query\": \"Optimize the search function for better performance with large arrays\",\n  \"codebase\": [\n    {\n      \"filename\": \"src/search.ts\",\n      \"content\": \"function findItem(array: Item[], targetId: string): Item | undefined {\\\\n  for (let i = 0; i < array.length; i++) {\\\\n    const item = array[i];\\\\n    if (item.id === targetId) {\\\\n      return item;\\\\n}\\\\n}\\\\n  return undefined;\\\\n}\"\n    }\n  ],\n  \"token_limit\": 100000\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"results\": [\n    {\n      \"filename\": \"src/search.ts\",\n      \"score\": 0.953125\n    }\n  ],\n  \"usage\": {\n    \"total_tokens\": 96\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "71efab60-d628-4f89-b8f7-6659d509337c",
+              "name": "Bad request",
+              "originalRequest": {
+                "url": {
+                  "protocol": "https",
+                  "path": [
+                    "v2",
+                    "code",
+                    "rank"
+                  ],
+                  "host": [
+                    "ranker",
+                    "endpoint",
+                    "relace",
+                    "run"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"query\": \"Optimize the search function for better performance with large arrays\",\n  \"codebase\": [\n    {\n      \"filename\": \"src/search.ts\",\n      \"content\": \"function findItem(array: Item[], targetId: string): Item | undefined {\\\\n  for (let i = 0; i < array.length; i++) {\\\\n    const item = array[i];\\\\n    if (item.id === targetId) {\\\\n      return item;\\\\n}\\\\n}\\\\n  return undefined;\\\\n}\"\n    }\n  ],\n  \"token_limit\": 100000\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"Invalid JSON in request body\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "7ebac357-36d6-44de-b15d-b48fed90d44c",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "protocol": "https",
+                  "path": [
+                    "v2",
+                    "code",
+                    "rank"
+                  ],
+                  "host": [
+                    "ranker",
+                    "endpoint",
+                    "relace",
+                    "run"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"query\": \"Optimize the search function for better performance with large arrays\",\n  \"codebase\": [\n    {\n      \"filename\": \"src/search.ts\",\n      \"content\": \"function findItem(array: Item[], targetId: string): Item | undefined {\\\\n  for (let i = 0; i < array.length; i++) {\\\\n    const item = array[i];\\\\n    if (item.id === targetId) {\\\\n      return item;\\\\n}\\\\n}\\\\n  return undefined;\\\\n}\"\n    }\n  ],\n  \"token_limit\": 100000\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"Authorized header required\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f91e2f52-e38d-4fdd-8871-afdffea34e8f",
+              "name": "API key not found",
+              "originalRequest": {
+                "url": {
+                  "protocol": "https",
+                  "path": [
+                    "v2",
+                    "code",
+                    "rank"
+                  ],
+                  "host": [
+                    "ranker",
+                    "endpoint",
+                    "relace",
+                    "run"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"query\": \"Optimize the search function for better performance with large arrays\",\n  \"codebase\": [\n    {\n      \"filename\": \"src/search.ts\",\n      \"content\": \"function findItem(array: Item[], targetId: string): Item | undefined {\\\\n  for (let i = 0; i < array.length; i++) {\\\\n    const item = array[i];\\\\n    if (item.id === targetId) {\\\\n      return item;\\\\n}\\\\n}\\\\n  return undefined;\\\\n}\"\n    }\n  ],\n  \"token_limit\": 100000\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"Bad Request: Route not found\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "acb9c130-e08d-418e-84b0-983a4d6234d6",
+              "name": "Rate limit exceeded",
+              "originalRequest": {
+                "url": {
+                  "protocol": "https",
+                  "path": [
+                    "v2",
+                    "code",
+                    "rank"
+                  ],
+                  "host": [
+                    "ranker",
+                    "endpoint",
+                    "relace",
+                    "run"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"query\": \"Optimize the search function for better performance with large arrays\",\n  \"codebase\": [\n    {\n      \"filename\": \"src/search.ts\",\n      \"content\": \"function findItem(array: Item[], targetId: string): Item | undefined {\\\\n  for (let i = 0; i < array.length; i++) {\\\\n    const item = array[i];\\\\n    if (item.id === targetId) {\\\\n      return item;\\\\n}\\\\n}\\\\n  return undefined;\\\\n}\"\n    }\n  ],\n  \"token_limit\": 100000\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "disabled": false,
+                  "description": "Rate limit ceiling for the API key",
+                  "key": "X-RateLimit-Limit",
+                  "value": "string"
+                },
+                {
+                  "disabled": false,
+                  "description": "Number of requests left for the time window",
+                  "key": "X-RateLimit-Remaining",
+                  "value": "string"
+                },
+                {
+                  "disabled": false,
+                  "description": "Time at which the rate limit resets",
+                  "key": "X-RateLimit-Reset",
+                  "value": "string"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"Rate limit exceeded\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "81938237-1603-49d5-a12e-7749806c552b",
+              "name": "Internal server error",
+              "originalRequest": {
+                "url": {
+                  "protocol": "https",
+                  "path": [
+                    "v2",
+                    "code",
+                    "rank"
+                  ],
+                  "host": [
+                    "ranker",
+                    "endpoint",
+                    "relace",
+                    "run"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"query\": \"Optimize the search function for better performance with large arrays\",\n  \"codebase\": [\n    {\n      \"filename\": \"src/search.ts\",\n      \"content\": \"function findItem(array: Item[], targetId: string): Item | undefined {\\\\n  for (let i = 0; i < array.length; i++) {\\\\n    const item = array[i];\\\\n    if (item.id === targetId) {\\\\n      return item;\\\\n}\\\\n}\\\\n  return undefined;\\\\n}\"\n    }\n  ],\n  \"token_limit\": 100000\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"Error fetching from origin server\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "61a3f9c1-5efd-4003-ac50-bbea31d2a540",
+          "name": "Embed code snippets into a vector database for semantic search.",
+          "request": {
+            "name": "Embed code snippets into a vector database for semantic search.",
+            "description": {
+              "content": "Embed code snippets into a vector database for semantic search.",
+              "type": "text/plain"
+            },
+            "url": {
+              "protocol": "https",
+              "path": [
+                "v1",
+                "code",
+                "embed"
+              ],
+              "host": [
+                "embeddings",
+                "endpoint",
+                "relace",
+                "run"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"model\": \"<string>\",\n  \"input\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"output_dtype\": \"float\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "77383ed5-24c3-4d86-8708-df0994f6c81e",
+              "name": "Codebase embedded successfully",
+              "originalRequest": {
+                "url": {
+                  "protocol": "https",
+                  "path": [
+                    "v1",
+                    "code",
+                    "embed"
+                  ],
+                  "host": [
+                    "embeddings",
+                    "endpoint",
+                    "relace",
+                    "run"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"model\": \"relace-embed-v1\",\n  \"input\": [\n    \"input 1\",\n    \"input 2\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"results\": [\n    {\n      \"index\": 7015\n    },\n    {\n      \"index\": 4037\n    }\n  ],\n  \"usage\": {\n    \"total_tokens\": 8\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "5e1c6e5f-d451-4a7c-a607-5d151c2c3212",
+              "name": "Bad request",
+              "originalRequest": {
+                "url": {
+                  "protocol": "https",
+                  "path": [
+                    "v1",
+                    "code",
+                    "embed"
+                  ],
+                  "host": [
+                    "embeddings",
+                    "endpoint",
+                    "relace",
+                    "run"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"model\": \"relace-embed-v1\",\n  \"input\": [\n    \"input 1\",\n    \"input 2\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"Invalid JSON in request body\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "931f62c4-8ee1-4c90-8c0d-3d9f2cba06d6",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "protocol": "https",
+                  "path": [
+                    "v1",
+                    "code",
+                    "embed"
+                  ],
+                  "host": [
+                    "embeddings",
+                    "endpoint",
+                    "relace",
+                    "run"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"model\": \"relace-embed-v1\",\n  \"input\": [\n    \"input 1\",\n    \"input 2\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"Authorized header required\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "dea1f521-c792-4ce0-8259-3b2a40cbb5a1",
+              "name": "API key not found",
+              "originalRequest": {
+                "url": {
+                  "protocol": "https",
+                  "path": [
+                    "v1",
+                    "code",
+                    "embed"
+                  ],
+                  "host": [
+                    "embeddings",
+                    "endpoint",
+                    "relace",
+                    "run"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"model\": \"relace-embed-v1\",\n  \"input\": [\n    \"input 1\",\n    \"input 2\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"Bad Request: Route not found\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "480371e2-6a57-402f-8042-64f949591479",
+              "name": "Rate limit exceeded",
+              "originalRequest": {
+                "url": {
+                  "protocol": "https",
+                  "path": [
+                    "v1",
+                    "code",
+                    "embed"
+                  ],
+                  "host": [
+                    "embeddings",
+                    "endpoint",
+                    "relace",
+                    "run"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"model\": \"relace-embed-v1\",\n  \"input\": [\n    \"input 1\",\n    \"input 2\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "disabled": false,
+                  "description": "Rate limit ceiling for the API key",
+                  "key": "X-RateLimit-Limit",
+                  "value": "string"
+                },
+                {
+                  "disabled": false,
+                  "description": "Number of requests left for the time window",
+                  "key": "X-RateLimit-Remaining",
+                  "value": "string"
+                },
+                {
+                  "disabled": false,
+                  "description": "Time at which the rate limit resets",
+                  "key": "X-RateLimit-Reset",
+                  "value": "string"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"Rate limit exceeded\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ab4c1437-0f76-4888-8991-eb2662208620",
+              "name": "Internal server error",
+              "originalRequest": {
+                "url": {
+                  "protocol": "https",
+                  "path": [
+                    "v1",
+                    "code",
+                    "embed"
+                  ],
+                  "host": [
+                    "embeddings",
+                    "endpoint",
+                    "relace",
+                    "run"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"model\": \"relace-embed-v1\",\n  \"input\": [\n    \"input 1\",\n    \"input 2\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"Error fetching from origin server\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://compact.endpoint.relace.run",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "caa8c8bd-93e8-4294-9814-205ea116c9d9",
+    "name": "Relace Code API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "API for accessing Relace code generation models.",
+      "type": "text/plain"
+    }
+  }
+}

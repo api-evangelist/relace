@@ -11,7 +11,7 @@ server:
   config:
     command: uvx
     args:
-      - relace-mcp-server
+    - relace-mcp-server
     env:
       RELACE_API_KEY: YOUR_API_KEY_HERE
   auth:
@@ -19,15 +19,20 @@ server:
     env: RELACE_API_KEY
     obtain: https://app.relace.ai/settings/api-keys
   clients:
-    - Claude Code
-    - Cursor
-    - VS Code
+  - Claude Code
+  - Cursor
+  - VS Code
   prerequisites:
-    - uv package manager
-    - ripgrep (rg) for grep_search
+  - uv package manager
+  - ripgrep (rg) for grep_search
 tools:
-  - name: relace_search
-    description: >-
-      Fast Agentic Search — sifts through the codebase and returns a formatted
-      list of relevant files with line ranges, using parallel view_file and grep
-      over the local filesystem.
+- name: relace_search
+  description: Fast Agentic Search — sifts through the codebase and returns a formatted list of relevant
+    files with line ranges, using parallel view_file and grep over the local filesystem.
+deployment:
+  mode: remote
+  endpoint: https://app.relace.ai/settings/api-keys
+  verified: probed
+  probe: http-200
+  checked: '2026-08-12'
+  source: catalog MCP census

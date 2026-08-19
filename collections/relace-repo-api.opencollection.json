@@ -1,0 +1,170 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Relace Code Repo API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Repo",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "GET /v1/repo",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://compact.endpoint.relace.run/v1/repo",
+            "params": [
+              {
+                "name": "order_by",
+                "value": "",
+                "type": "query",
+                "description": "Field to order results by."
+              },
+              {
+                "name": "order_descending",
+                "value": "",
+                "type": "query",
+                "description": "Whether to order results in descending order."
+              },
+              {
+                "name": "filter_metadata",
+                "value": "",
+                "type": "query",
+                "description": "URL-encoded JSON map of metadata key/value pairs to filter by."
+              },
+              {
+                "name": "page_start",
+                "value": "",
+                "type": "query",
+                "description": "Index of the first item to return (0-based)"
+              },
+              {
+                "name": "page_size",
+                "value": "",
+                "type": "query",
+                "description": "Number of items to return per page"
+              }
+            ]
+          },
+          "docs": "List all repositories"
+        },
+        {
+          "info": {
+            "name": "POST /v1/repo",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://compact.endpoint.relace.run/v1/repo",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a new repository"
+        },
+        {
+          "info": {
+            "name": "DELETE /v1/repo/{repo_id}",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://compact.endpoint.relace.run/v1/repo/:repo_id",
+            "params": [
+              {
+                "name": "repo_id",
+                "value": "",
+                "type": "path",
+                "description": "Repository ID"
+              }
+            ]
+          },
+          "docs": "Delete a repository"
+        },
+        {
+          "info": {
+            "name": "POST /v1/repo/{repo_id}/update",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://compact.endpoint.relace.run/v1/repo/:repo_id/update",
+            "params": [
+              {
+                "name": "repo_id",
+                "value": "",
+                "type": "path",
+                "description": "Repository ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update repository content"
+        },
+        {
+          "info": {
+            "name": "POST /v1/repo/{repo_id}/retrieve",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://compact.endpoint.relace.run/v1/repo/:repo_id/retrieve",
+            "params": [
+              {
+                "name": "repo_id",
+                "value": "",
+                "type": "path",
+                "description": "Repository ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Retrieve relevant files from repository using semantic search"
+        },
+        {
+          "info": {
+            "name": "POST /v1/repo/{repo_id}/search",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://compact.endpoint.relace.run/v1/repo/:repo_id/search",
+            "params": [
+              {
+                "name": "repo_id",
+                "value": "",
+                "type": "path",
+                "description": "Repository ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Search for specific text patterns in repository files"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

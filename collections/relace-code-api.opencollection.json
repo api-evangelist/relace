@@ -1,0 +1,99 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Relace Code API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Code",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "POST /v1/code/compact",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://compact.endpoint.relace.run/v1/code/compact",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Compress an agent trace to only the important details."
+        },
+        {
+          "info": {
+            "name": "POST /v1/code/apply",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://compact.endpoint.relace.run/v1/code/apply",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Merge code snippets from an LLM into your existing codebase."
+        },
+        {
+          "info": {
+            "name": "POST /v1/code/rank",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://compact.endpoint.relace.run/v1/code/rank",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "List files in your codebase in order of relevance to a user's query."
+        },
+        {
+          "info": {
+            "name": "POST /v2/code/rank",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://compact.endpoint.relace.run/v2/code/rank",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Assess the relevance of each file in your codebase to a user's query."
+        },
+        {
+          "info": {
+            "name": "POST /v1/code/embed",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://compact.endpoint.relace.run/v1/code/embed",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Embed code snippets into a vector database for semantic search."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}
