@@ -1,4 +1,4 @@
-openapi: 3.0.1
+openapi: 3.2.0
 info:
   title: Relace Code API
   description: API for accessing Relace code generation models.
@@ -104,6 +104,10 @@ paths:
                 $ref: '#/components/schemas/Error500'
       tags:
       - Code
+      summary: Create code compact
+      x-summary-source: derived
+      operationId: postV1CodeCompact
+      x-operation-id-source: derived
   /v1/code/apply:
     post:
       description: Merge code snippets from an LLM into your existing codebase.
@@ -176,6 +180,10 @@ paths:
                 $ref: '#/components/schemas/Error500'
       tags:
       - Code
+      summary: Create code apply
+      x-summary-source: derived
+      operationId: postV1CodeApply
+      x-operation-id-source: derived
   /v1/code/rank:
     post:
       deprecated: true
@@ -255,6 +263,10 @@ paths:
                 $ref: '#/components/schemas/Error500'
       tags:
       - Code
+      summary: Create code rank
+      x-summary-source: derived
+      operationId: postV1CodeRank
+      x-operation-id-source: derived
   /v2/code/rank:
     post:
       description: Assess the relevance of each file in your codebase to a user's query.
@@ -325,6 +337,10 @@ paths:
                 $ref: '#/components/schemas/Error500'
       tags:
       - Code
+      summary: Create code rank
+      x-summary-source: derived
+      operationId: postV2CodeRank
+      x-operation-id-source: derived
   /v1/code/embed:
     post:
       description: Embed code snippets into a vector database for semantic search.
@@ -394,15 +410,51 @@ paths:
                 $ref: '#/components/schemas/Error500'
       tags:
       - Code
+      summary: Create code embed
+      x-summary-source: derived
+      operationId: postV1CodeEmbed
+      x-operation-id-source: derived
 components:
   schemas:
-    Error401:
+    v1CodeRerankerResponse:
+      type: array
+      description: Array of files ranked by relevance to the query
+      example:
+      - src/search.ts
+      - src/styles.css
+      - src/render.ts
+      - src/constants.ts
+      - src/types.ts
+    CodeRerankerRequest:
+      type: object
+      required:
+      - query
+      - codebase
+      - token_limit
+      properties:
+        query:
+          type: string
+          description: The natural language query describing the problem to solve
+        codebase:
+          type: array
+          description: An array of files with their content, providing context for the query
+          items:
+            $ref: '#/components/schemas/CodeFile'
+        token_limit:
+          type: integer
+          description: Maximum token limit for the response
+          default: 100000
+        relace_metadata:
+          type: object
+          description: Optional metadata for logging and tracking purposes. Removed before forwarding to origin server.
+          additionalProperties: true
+    Error400:
       type: object
       properties:
         error:
           type: string
           description: Error message
-          example: Authorized header required
+          example: Invalid JSON in request body
     v1CodeEmbedderResponse:
       type: object
       properties:
@@ -437,25 +489,6 @@ components:
               description: Total number of tokens used
               example: 8
           description: Token usage information for the request
-    CodeFile:
-      type: object
-      required:
-      - filename
-      - content
-      properties:
-        filename:
-          type: string
-          description: The name of the file including its path
-        content:
-          type: string
-          description: The content of the file
-    Error429:
-      type: object
-      properties:
-        error:
-          type: string
-          description: Error message
-          example: Rate limit exceeded
     v2CodeRerankerResponse:
       type: object
       properties:
@@ -486,109 +519,6 @@ components:
               description: Total number of tokens used
               example: 96
           description: Token usage information for the request
-    Error400:
-      type: object
-      properties:
-        error:
-          type: string
-          description: Error message
-          example: Invalid JSON in request body
-    v1CodeRerankerResponse:
-      type: array
-      description: Array of files ranked by relevance to the query
-      example:
-      - src/search.ts
-      - src/styles.css
-      - src/render.ts
-      - src/constants.ts
-      - src/types.ts
-    v1CodeEmbedderRequest:
-      type: object
-      properties:
-        model:
-          type: string
-          description: The model to use for embedding
-        input:
-          type: array
-          description: Array of strings to embed
-          items:
-            type: string
-        output_dtype:
-          type: string
-          description: Data type of the output embedding vectors. The `binary` quantization results in more compact embeddings with only a small loss in retrieval performance. See [HuggingFace blog post](https://huggingface.co/blog/embedding-quantization#binary-quantization) for details.
-          enum:
-          - float
-          - binary
-          default: float
-    CompactRequest:
-      type: object
-      required:
-      - messages
-      properties:
-        messages:
-          type: array
-          description: The agent trace to compact, in OpenAI Chat Completions, OpenAI Responses, or Anthropic Messages format. The format is detected automatically, and the compressed trace is returned in the same format.
-          items:
-            type: object
-            description: A message in the same format as the rest of the trace
-        target_tokens:
-          type: integer
-          description: Approximate token budget for the retained context, in your agent model's tokens. Defaults to 96k tokens. Counts are computed with a heuristic lookup table to reduce API latency; your provider's count may differ slightly.
-        agent_model:
-          type: string
-          description: The model that generated the trace, as its API model id (e.g. `claude-fable-5`, `gpt-5.5`, `grok-4.5`). Relace uses this to apply model-specific compaction improvements and count tokens more accurately.
-    CodeRerankerRequest:
-      type: object
-      required:
-      - query
-      - codebase
-      - token_limit
-      properties:
-        query:
-          type: string
-          description: The natural language query describing the problem to solve
-        codebase:
-          type: array
-          description: An array of files with their content, providing context for the query
-          items:
-            $ref: '#/components/schemas/CodeFile'
-        token_limit:
-          type: integer
-          description: Maximum token limit for the response
-          default: 100000
-        relace_metadata:
-          type: object
-          description: Optional metadata for logging and tracking purposes. Removed before forwarding to origin server.
-          additionalProperties: true
-    InstantApplyRequest:
-      type: object
-      required:
-      - initial_code
-      - edit_snippet
-      properties:
-        model:
-          type: string
-          description: Choice of apply model to use
-          enum:
-          - relace-apply-3
-          default: relace-apply-3
-        initial_code:
-          type: string
-          description: The original code that needs to be modified
-        edit_snippet:
-          type: string
-          description: The code changes to be applied to the initial code
-        instruction:
-          type: string
-          description: Optional single line instruction for to disambiguate the edit snippet. *e.g.* `Remove the captcha from the login page`
-        stream:
-          type: boolean
-          description: Whether to stream the response back
-          default: false
-        relace_metadata:
-          type: object
-          description: Optional metadata for logging and tracking purposes.
-          additionalProperties: true
     Error500:
       type: object
       properties:
@@ -596,6 +526,13 @@ components:
           type: string
           description: Error message
           example: Error fetching from origin server
+    Error401:
+      type: object
+      properties:
+        error:
+          type: string
+          description: Error message
+          example: Authorized header required
     InstantApplyResponse:
       type: object
       properties:
@@ -653,6 +590,89 @@ components:
           prompt_tokens: 135407
           completion_tokens: 17323
           total_tokens: 152730
+    Error429:
+      type: object
+      properties:
+        error:
+          type: string
+          description: Error message
+          example: Rate limit exceeded
+    v1CodeEmbedderRequest:
+      type: object
+      properties:
+        model:
+          type: string
+          description: The model to use for embedding
+        input:
+          type: array
+          description: Array of strings to embed
+          items:
+            type: string
+        output_dtype:
+          type: string
+          description: Data type of the output embedding vectors. The `binary` quantization results in more compact embeddings with only a small loss in retrieval performance. See [HuggingFace blog post](https://huggingface.co/blog/embedding-quantization#binary-quantization) for details.
+          enum:
+          - float
+          - binary
+          default: float
+    CodeFile:
+      type: object
+      required:
+      - filename
+      - content
+      properties:
+        filename:
+          type: string
+          description: The name of the file including its path
+        content:
+          type: string
+          description: The content of the file
+    CompactRequest:
+      type: object
+      required:
+      - messages
+      properties:
+        messages:
+          type: array
+          description: The agent trace to compact, in OpenAI Chat Completions, OpenAI Responses, or Anthropic Messages format. The format is detected automatically, and the compressed trace is returned in the same format.
+          items:
+            type: object
+            description: A message in the same format as the rest of the trace
+        target_tokens:
+          type: integer
+          description: Approximate token budget for the retained context, in your agent model's tokens. Defaults to 96k tokens. Counts are computed with a heuristic lookup table to reduce API latency; your provider's count may differ slightly.
+        agent_model:
+          type: string
+          description: The model that generated the trace, as its API model id (e.g. `claude-fable-5`, `gpt-5.5`, `grok-4.5`). Relace uses this to apply model-specific compaction improvements and count tokens more accurately.
+    InstantApplyRequest:
+      type: object
+      required:
+      - initial_code
+      - edit_snippet
+      properties:
+        model:
+          type: string
+          description: Choice of apply model to use
+          enum:
+          - relace-apply-3
+          default: relace-apply-3
+        initial_code:
+          type: string
+          description: The original code that needs to be modified
+        edit_snippet:
+          type: string
+          description: The code changes to be applied to the initial code
+        instruction:
+          type: string
+          description: Optional single line instruction for to disambiguate the edit snippet. *e.g.* `Remove the captcha from the login page`
+        stream:
+          type: boolean
+          description: Whether to stream the response back
+          default: false
+        relace_metadata:
+          type: object
+          description: Optional metadata for logging and tracking purposes.
+          additionalProperties: true
     Error404:
       type: object
       properties:
