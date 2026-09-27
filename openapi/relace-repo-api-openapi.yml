@@ -299,6 +299,79 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
+    SearchResponse:
+      type: object
+      required:
+      - results
+      properties:
+        results:
+          type: array
+          items:
+            type: object
+            required:
+            - filename
+            - line_number
+            - line_content
+            - match_start
+            - match_end
+            properties:
+              filename:
+                type: string
+              line_number:
+                type: integer
+              line_content:
+                type: string
+              match_start:
+                type: integer
+              match_end:
+                type: integer
+    CreateRepoRequest:
+      type: object
+      properties:
+        name:
+          type: string
+        source:
+          oneOf:
+          - $ref: '#/components/schemas/FileSource'
+          - $ref: '#/components/schemas/GitSource'
+    UpdateRepoResponse:
+      type: object
+      required:
+      - commit_id
+      properties:
+        commit_id:
+          type: string
+    SearchRequest:
+      type: object
+      required:
+      - query
+      properties:
+        query:
+          type: string
+    UpdateRepoRequest:
+      type: object
+      required:
+      - source
+      properties:
+        source:
+          oneOf:
+          - $ref: '#/components/schemas/GitSource'
+          - $ref: '#/components/schemas/FilesOverwriteSource'
+          - $ref: '#/components/schemas/FilesDiffSource'
+    Error400:
+      type: object
+      properties:
+        error:
+          type: string
+          description: Error message
+          example: Invalid JSON in request body
+    Error404:
+      type: object
+      properties:
+        error:
+          type: string
+          description: Error message
+          example: 'Bad Request: Route not found'
     FilesDiffSource:
       type: object
       required:
@@ -343,46 +416,6 @@ components:
                   type: string
                 content:
                   type: string
-    SearchResponse:
-      type: object
-      required:
-      - results
-      properties:
-        results:
-          type: array
-          items:
-            type: object
-            required:
-            - filename
-            - line_number
-            - line_content
-            - match_start
-            - match_end
-            properties:
-              filename:
-                type: string
-              line_number:
-                type: integer
-              line_content:
-                type: string
-              match_start:
-                type: integer
-              match_end:
-                type: integer
-    Error400:
-      type: object
-      properties:
-        error:
-          type: string
-          description: Error message
-          example: Invalid JSON in request body
-    UpdateRepoResponse:
-      type: object
-      required:
-      - commit_id
-      properties:
-        commit_id:
-          type: string
     FilesOverwriteSource:
       type: object
       required:
@@ -398,132 +431,6 @@ components:
           type: string
           enum:
           - overwrite
-        files:
-          type: array
-          items:
-            type: object
-            required:
-            - filename
-            - content
-            properties:
-              filename:
-                type: string
-              content:
-                type: string
-    SearchRequest:
-      type: object
-      required:
-      - query
-      properties:
-        query:
-          type: string
-    Error401:
-      type: object
-      properties:
-        error:
-          type: string
-          description: Error message
-          example: Authorized header required
-    UpdateRepoRequest:
-      type: object
-      required:
-      - source
-      properties:
-        source:
-          oneOf:
-          - $ref: '#/components/schemas/GitSource'
-          - $ref: '#/components/schemas/FilesOverwriteSource'
-          - $ref: '#/components/schemas/FilesDiffSource'
-    CreateRepoResponse:
-      type: object
-      required:
-      - repo_id
-      properties:
-        repo_id:
-          type: string
-    GitSource:
-      type: object
-      required:
-      - type
-      - url
-      properties:
-        type:
-          type: string
-          enum:
-          - git
-        url:
-          type: string
-        branch:
-          type: string
-        commit:
-          type: string
-        depth:
-          type: integer
-    CreateRepoRequest:
-      type: object
-      properties:
-        name:
-          type: string
-        source:
-          oneOf:
-          - $ref: '#/components/schemas/FileSource'
-          - $ref: '#/components/schemas/GitSource'
-    RetrieveRequest:
-      type: object
-      required:
-      - query
-      properties:
-        query:
-          type: string
-        branch:
-          type: string
-        hash:
-          type: string
-        score_threshold:
-          type: number
-          format: float
-        token_limit:
-          type: integer
-        include_content:
-          type: boolean
-    ListReposResponse:
-      type: object
-      required:
-      - items
-      properties:
-        items:
-          type: array
-          items:
-            type: object
-            required:
-            - repo_id
-            - created_at
-            - metadata
-            properties:
-              repo_id:
-                type: string
-              created_at:
-                type: string
-                format: date-time
-              updated_at:
-                type: string
-                format: date-time
-              metadata:
-                type: object
-                additionalProperties: true
-        next_page:
-          type: integer
-          description: Index of the first item on the next page (omitted if there are no more items)
-    FileSource:
-      type: object
-      required:
-      - type
-      - files
-      properties:
-        type:
-          type: string
-          enum:
-          - files
         files:
           type: array
           items:
@@ -558,13 +465,106 @@ components:
           type: string
         pending_embeddings:
           type: integer
-    Error404:
+    FileSource:
+      type: object
+      required:
+      - type
+      - files
+      properties:
+        type:
+          type: string
+          enum:
+          - files
+        files:
+          type: array
+          items:
+            type: object
+            required:
+            - filename
+            - content
+            properties:
+              filename:
+                type: string
+              content:
+                type: string
+    Error401:
       type: object
       properties:
         error:
           type: string
           description: Error message
-          example: 'Bad Request: Route not found'
+          example: Authorized header required
+    GitSource:
+      type: object
+      required:
+      - type
+      - url
+      properties:
+        type:
+          type: string
+          enum:
+          - git
+        url:
+          type: string
+        branch:
+          type: string
+        commit:
+          type: string
+        depth:
+          type: integer
+    CreateRepoResponse:
+      type: object
+      required:
+      - repo_id
+      properties:
+        repo_id:
+          type: string
+    ListReposResponse:
+      type: object
+      required:
+      - items
+      properties:
+        items:
+          type: array
+          items:
+            type: object
+            required:
+            - repo_id
+            - created_at
+            - metadata
+            properties:
+              repo_id:
+                type: string
+              created_at:
+                type: string
+                format: date-time
+              updated_at:
+                type: string
+                format: date-time
+              metadata:
+                type: object
+                additionalProperties: true
+        next_page:
+          type: integer
+          description: Index of the first item on the next page (omitted if there are no more items)
+    RetrieveRequest:
+      type: object
+      required:
+      - query
+      properties:
+        query:
+          type: string
+        branch:
+          type: string
+        hash:
+          type: string
+        score_threshold:
+          type: number
+          format: float
+        token_limit:
+          type: integer
+        include_content:
+          type: boolean
   securitySchemes:
     bearerAuth:
       type: http

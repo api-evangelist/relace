@@ -53,7 +53,7 @@ tags:
 - Coding Agents
 - Code Generation
 - Developer Tools
-- Machine-Learning
+- Machine Learning
 - Code Search
 - LLM
 tags_raw:
@@ -65,6 +65,7 @@ tags_raw:
 - Machine Learning
 - Code Search
 - LLM
+- Machine-Learning
 apis:
 - aid: relace:relace-code-api
   name: Relace Code API
