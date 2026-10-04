@@ -1,0 +1,36 @@
+slug: relace
+provider: Relace
+generated_by: planning/capability-mapping/scripts/classify_capabilities.py
+model: claude-opus-5
+frame:
+- Software & Technology
+min_confidence: 0.7
+capability_model:
+  source: https://github.com/vincentmakes/turbo-ea-capabilities
+  license: CC-BY-4.0
+  attribution: Turbo EA Capabilities by Vincent Verdet — Turbo EA, https://github.com/vincentmakes/turbo-ea-capabilities,
+    CC BY 4.0
+  notice: NOTICE
+edge_count: 2
+edges:
+- tag: Repo
+  spec_file: relace-repo-api-openapi.yml
+  capability_id: BC-4200.40
+  capability_id_l1: BC-4200
+  capability_name: Software Construction Management
+  confidence: 0.72
+  evidence: POST /v1/repo  Create repo; POST /v1/repo/{repo_id}/update; schemas GitSource, FilesDiffSource
+    — "Relace Repos, a 'GitHub for AI agents' source-control layer"
+  reason: The tag exposes repository create/update/retrieve/search over git-sourced file trees — a source-control
+    layer, which Software Construction Management explicitly covers ('source control, code review').
+- tag: Code
+  spec_file: relace-code-api-openapi.yml
+  capability_id: BC-4200.40
+  capability_id_l1: BC-4200
+  capability_name: Software Construction Management
+  confidence: 0.7
+  evidence: POST /v1/code/apply  Create code apply; "Instant Apply (relace-apply-3) for merging LLM code
+    edits"; schemas InstantApplyRequest, CodeRerankerRequest, CodeFile
+  reason: Operations apply code edits, rank and embed code files for codebase retrieval — tooling that
+    directly serves software implementation practice, i.e. Software Construction Management. Some ambiguity
+    with Engineering Productivity Management, hence 0.7.
