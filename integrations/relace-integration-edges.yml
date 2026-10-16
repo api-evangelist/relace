@@ -18,11 +18,11 @@ edges:
       tools_share: 0.5
       structured_output_share: 0.5
     inference-host:
-      models: 7
+      models: 10
       router_ids:
       - Relace
-      tools_share: 0.86
-      structured_output_share: 0.29
+      tools_share: 0.9
+      structured_output_share: 0.6
   matched_by: verified-token-table
   detected_by: sweep-model-routing.py
   first_seen: '2026-10-13'
