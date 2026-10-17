@@ -299,23 +299,34 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
-    SearchRequest:
+    ListReposResponse:
       type: object
       required:
-      - query
+      - items
       properties:
-        query:
-          type: string
-    UpdateRepoRequest:
-      type: object
-      required:
-      - source
-      properties:
-        source:
-          oneOf:
-          - $ref: '#/components/schemas/GitSource'
-          - $ref: '#/components/schemas/FilesOverwriteSource'
-          - $ref: '#/components/schemas/FilesDiffSource'
+        items:
+          type: array
+          items:
+            type: object
+            required:
+            - repo_id
+            - created_at
+            - metadata
+            properties:
+              repo_id:
+                type: string
+              created_at:
+                type: string
+                format: date-time
+              updated_at:
+                type: string
+                format: date-time
+              metadata:
+                type: object
+                additionalProperties: true
+        next_page:
+          type: integer
+          description: Index of the first item on the next page (omitted if there are no more items)
     Error404:
       type: object
       properties:
@@ -323,39 +334,13 @@ components:
           type: string
           description: Error message
           example: 'Bad Request: Route not found'
-    SearchResponse:
-      type: object
-      required:
-      - results
-      properties:
-        results:
-          type: array
-          items:
-            type: object
-            required:
-            - filename
-            - line_number
-            - line_content
-            - match_start
-            - match_end
-            properties:
-              filename:
-                type: string
-              line_number:
-                type: integer
-              line_content:
-                type: string
-              match_start:
-                type: integer
-              match_end:
-                type: integer
-    Error400:
+    Error401:
       type: object
       properties:
         error:
           type: string
           description: Error message
-          example: Invalid JSON in request body
+          example: Authorized header required
     CreateRepoRequest:
       type: object
       properties:
@@ -365,6 +350,13 @@ components:
           oneOf:
           - $ref: '#/components/schemas/FileSource'
           - $ref: '#/components/schemas/GitSource'
+    Error400:
+      type: object
+      properties:
+        error:
+          type: string
+          description: Error message
+          example: Invalid JSON in request body
     RetrieveRequest:
       type: object
       required:
@@ -383,16 +375,21 @@ components:
           type: integer
         include_content:
           type: boolean
-    FileSource:
+    FilesOverwriteSource:
       type: object
       required:
       - type
+      - mode
       - files
       properties:
         type:
           type: string
           enum:
           - files
+        mode:
+          type: string
+          enum:
+          - overwrite
         files:
           type: array
           items:
@@ -423,6 +420,56 @@ components:
           type: string
         depth:
           type: integer
+    SearchResponse:
+      type: object
+      required:
+      - results
+      properties:
+        results:
+          type: array
+          items:
+            type: object
+            required:
+            - filename
+            - line_number
+            - line_content
+            - match_start
+            - match_end
+            properties:
+              filename:
+                type: string
+              line_number:
+                type: integer
+              line_content:
+                type: string
+              match_start:
+                type: integer
+              match_end:
+                type: integer
+    SearchRequest:
+      type: object
+      required:
+      - query
+      properties:
+        query:
+          type: string
+    UpdateRepoRequest:
+      type: object
+      required:
+      - source
+      properties:
+        source:
+          oneOf:
+          - $ref: '#/components/schemas/GitSource'
+          - $ref: '#/components/schemas/FilesOverwriteSource'
+          - $ref: '#/components/schemas/FilesDiffSource'
+    UpdateRepoResponse:
+      type: object
+      required:
+      - commit_id
+      properties:
+        commit_id:
+          type: string
     FilesDiffSource:
       type: object
       required:
@@ -467,21 +514,23 @@ components:
                   type: string
                 content:
                   type: string
-    FilesOverwriteSource:
+    CreateRepoResponse:
+      type: object
+      required:
+      - repo_id
+      properties:
+        repo_id:
+          type: string
+    FileSource:
       type: object
       required:
       - type
-      - mode
       - files
       properties:
         type:
           type: string
           enum:
           - files
-        mode:
-          type: string
-          enum:
-          - overwrite
         files:
           type: array
           items:
@@ -516,55 +565,6 @@ components:
           type: string
         pending_embeddings:
           type: integer
-    ListReposResponse:
-      type: object
-      required:
-      - items
-      properties:
-        items:
-          type: array
-          items:
-            type: object
-            required:
-            - repo_id
-            - created_at
-            - metadata
-            properties:
-              repo_id:
-                type: string
-              created_at:
-                type: string
-                format: date-time
-              updated_at:
-                type: string
-                format: date-time
-              metadata:
-                type: object
-                additionalProperties: true
-        next_page:
-          type: integer
-          description: Index of the first item on the next page (omitted if there are no more items)
-    CreateRepoResponse:
-      type: object
-      required:
-      - repo_id
-      properties:
-        repo_id:
-          type: string
-    UpdateRepoResponse:
-      type: object
-      required:
-      - commit_id
-      properties:
-        commit_id:
-          type: string
-    Error401:
-      type: object
-      properties:
-        error:
-          type: string
-          description: Error message
-          example: Authorized header required
   securitySchemes:
     bearerAuth:
       type: http
