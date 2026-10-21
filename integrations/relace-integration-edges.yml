@@ -1,31 +1,4 @@
 edges:
-- partner_name: OpenRouter
-  partner: openrouter
-  partner_match: router
-  channel: partner-built
-  direction: partner-built
-  type: coverage
-  relationship: system-coverage
-  evidence: https://openrouter.ai/api/v1/models
-  coverage_role:
-  - inference-host
-  - model-maker
-  router_signals:
-    model-maker:
-      models: 2
-      router_ids:
-      - relace
-      tools_share: 0.5
-      structured_output_share: 0.5
-    inference-host:
-      models: 10
-      router_ids:
-      - Relace
-      tools_share: 0.9
-      structured_output_share: 0.6
-  matched_by: verified-token-table
-  detected_by: sweep-model-routing.py
-  first_seen: '2026-10-13'
 - partner_name: npm registry
   partner: npm
   partner_match: register
@@ -56,6 +29,62 @@ edges:
     detected: '2026-10-18'
   detected_by: sweep-official-sdks.py
   first_seen: '2026-10-18'
+- partner_name: OpenRouter
+  partner: openrouter
+  partner_match: router
+  channel: partner-built
+  direction: partner-built
+  type: coverage
+  relationship: system-coverage
+  evidence: https://openrouter.ai/api/v1/models
+  coverage_role:
+  - inference-host
+  - model-maker
+  router_signals:
+    model-maker:
+      models: 2
+      router_ids:
+      - relace
+      tools_share: 0.5
+      structured_output_share: 0.5
+    inference-host:
+      models: 13
+      router_ids:
+      - Relace
+      tools_share: 0.92
+      structured_output_share: 0.77
+  matched_by: verified-token-table
+  detected_by: sweep-model-routing.py
+  first_seen: '2026-10-13'
+- partner_name: Andreessen Horowitz (a16z)
+  partner: a16z
+  partner_match: register
+  type: register
+  channel: standard-directory
+  relationship: standard-participant
+  direction: partner-built
+  evidence: https://a16z.com/companies/relace/
+  category: vc portfolio participation
+  contract_reference:
+    register: a16z portfolio (a16z.com/portfolio/, the page's own data-companies JSON)
+    standard: null
+    spec_file: null
+    role: vc-portfolio-company
+    registered_name: Relace
+    register_id: https://a16z.com/companies/relace/
+    register_country: null
+    register_website: https://relace.ai
+    matched_domain: relace.ai
+    matched_by: domain
+    signal_note: 'participation only: the venture firm''s own published portfolio lists the company (investment);
+      an ownership and participation record, not conformance or certification'
+    detected_by: sweep-vc-portfolios.py
+    detected: '2026-10-21'
+    year: '2025'
+    status: Active
+    sector: Infra
+  detected_by: sweep-vc-portfolios.py
+  first_seen: '2026-10-21'
 generated: '2026-10-13'
 method: searched
 checked:
@@ -67,11 +96,17 @@ checked:
 - https://registry.npmjs.org
 - https://repo1.maven.org/maven2
 - https://rubygems.org/api/v1
+- https://a16z.com/portfolio/
+- https://www.battery.com/company/
+- https://www.battery.com/wp-admin/admin-ajax.php
+- https://www.indexventures.com/companies/
+- https://www.sequoiacap.com/our-companies/
+- https://www.sequoiacap.com/sitemap.xml
 source:
-- https://api.nuget.org/v3
-- https://crates.io/api/v1
-- https://proxy.golang.org
-- https://pypi.org/pypi
 - https://registry.npmjs.org
-- https://repo1.maven.org/maven2
+- https://pypi.org/pypi
 - https://rubygems.org/api/v1
+- https://crates.io/api/v1
+- https://repo1.maven.org/maven2
+- https://api.nuget.org/v3
+- https://proxy.golang.org
